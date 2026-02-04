@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import Keycloak from 'keycloak-js';
 import {
   HasRolesDirective,
@@ -11,7 +11,7 @@ import {
 
 @Component({
   selector: 'app-menu',
-  imports: [RouterModule, HasRolesDirective],
+  imports: [RouterLink, RouterLinkActive, HasRolesDirective],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
