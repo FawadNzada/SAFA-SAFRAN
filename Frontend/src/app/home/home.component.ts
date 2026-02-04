@@ -9,9 +9,25 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+
   products = [
-    { name: 'Demo Produkt A', price: 9.99 },
-    { name: 'Demo Produkt B', price: 14.50 },
-    { name: 'Demo Produkt C', price: 29.00 }
+    {
+      name: 'Premium Safran',
+      description: 'Hochwertiger iranischer Safran – intensiv, aromatisch & edel.',
+      price: 24.90,
+      badge: 'Bestseller'
+    },
+    {
+      name: 'Bio Kurkuma',
+      description: 'Reiner Bio-Kurkuma mit kräftiger Farbe und Geschmack.',
+      price: 9.90,
+      badge: ''
+    },
+    {
+      name: 'Safran & Kurkuma Bundle',
+      description: 'Unser Vorteilspaket – Genuss & Gesundheit kombiniert.',
+      price: 29.90,
+      badge: 'Spare 15%'
+    }
   ];
 }

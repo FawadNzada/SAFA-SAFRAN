@@ -1,8 +1,31 @@
-<h1>Produkte</h1>
 
-<ul>
-  <li *ngFor="let p of products">
-    {{ p.name }} - {{ p.price }} €
-  </li>
-</ul>
+<header class="header">
+  <div class="logo">
+    🌺 <span>SAFA-SAFRAN</span>
+  </div>
 
+  <nav class="nav">
+    <button class="nav-btn">Home</button>
+    <button class="nav-btn">Login</button>
+    <button class="cart-btn">🛒</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Edle Gewürze. Reiner Genuss.</h1>
+  <p>Premium Safran & Kurkuma – direkt, ehrlich & hochwertig.</p>
+</section>
+
+<section class="products">
+  <div class="product-card" *ngFor="let p of products">
+    <div class="badge" *ngIf="p.badge">{{ p.badge }}</div>
+    <h2>{{ p.name }}</h2>
+    <p class="description">{{ p.description }}</p>
+    <p class="price">{{ p.price }} €</p>
+    <button class="buy-btn">In den Warenkorb</button>
+  </div>
+</section>
+
+<footer class="footer">
+  © 2026 SAFA-SAFRAN · HTBL Leonding · Demo SYP
+</footer>
