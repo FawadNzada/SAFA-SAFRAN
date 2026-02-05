@@ -9,6 +9,10 @@ import { createAuthGuard } from 'keycloak-angular';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { canActivateAuthRole } from './guards/auth-role.guard';
+import { SafranInfoComponent } from './safran-info/safran-info';
+
+
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,5 +24,17 @@ export const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [canActivateAuthRole],   data: { role: 'myAdminRole'},  },
   { path: 'profile', component: UserProfileComponent,  canActivate: [canActivateAuthRole],    data: { role: 'view-profile' }  },
   { path: 'forbidden', component: ForbiddenComponent },
-  { path: '**', redirectTo: '/home' } 
+  { path: '**', redirectTo: '/home' },
+  {
+  path: 'produkte',
+  component: HomeComponent
+},
+{
+  path: 'safran',
+  component: SafranInfoComponent
+},
+
+  { path: 'home', component: HomeComponent },
+  
+{ path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

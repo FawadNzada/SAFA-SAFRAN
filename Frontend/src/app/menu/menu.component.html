@@ -1,13 +1,13 @@
-<nav>
-  <img src="assets/logo/safa-logo.png" class="logo">
+<header class="header">
+  <!-- LINKS: LOGO -->
+  <div class="logo">
+    <img src="assets/LOGO.png" alt="SAFA Logo">
+  </div>
 
-  <a routerLink="/home">Startseite</a>
-  <a routerLink="/products">Produkte</a>
-
-  <a routerLink="/cart">
-    🛒 Warenkorb ({{ cart.items().length }})
-  </a>
-
-  <button *ngIf="!authenticated" (click)="login()">Login</button>
-  <button *ngIf="authenticated" (click)="logout()">Logout</button>
-</nav>
+  <!-- RECHTS: NAVIGATION -->
+  <nav class="nav">
+    <a routerLink="/home">Startseite</a>
+    <a routerLink="/produkte">Produkte</a>
+    <a routerLink="/cart">Warenkorb ({{ cart.count() }})</a>
+  </nav>
+</header>

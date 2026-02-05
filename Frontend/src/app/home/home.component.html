@@ -1,24 +1,77 @@
+<!-- HERO -->
 <section class="hero">
-  <h1>Edler Safran aus höchster Qualität</h1>
-  <p>100% Reiner Safran</p>
+  <div class="hero-content">
+    <h1>Edler Safran aus höchster Qualität</h1>
+    <p>100% Reiner Safran</p>
+    <a class="cta" routerLink="/safran"> Jetzt entdecken </a>
+  </div>
 </section>
 
-<h2>Unsere Safran Produkte</h2>
-<div class="grid">
-  <div class="card" *ngFor="let p of products">
-    <img [src]="p.image">
-    <h3>{{ p.name }}</h3>
-    <p>{{ p.price }} €</p>
-    <button (click)="cart.add(p)">In den Warenkorb</button>
-  </div>
-</div>
 
-<h2>Exklusive Sets & Angebote</h2>
-<div class="grid">
-  <div class="card" *ngFor="let b of bundles">
-    <img [src]="b.image">
-    <h3>{{ b.name }}</h3>
-    <p>{{ b.price }} €</p>
-    <button (click)="cart.add(b)">In den Warenkorb</button>
+
+<!-- PRODUKTE -->
+<section class="section">
+  <h2>Unsere Bestsellers</h2>
+
+  <div class="product-grid">
+  <div class="product-card", class="card" *ngFor="let p of singles">
+    <img [src]="p.image" [alt]="p.name" />
+    <h3>{{ p.name }}</h3>
+    <p class="price">{{ p.price }} €</p>
+    <button (click)="cart.add(p)">
+      In den Warenkorb
+    </button>
+    <a class="product-grid" [routerLink]="['/product', p.id]">
+      Mehr erfahren
+    </a>
   </div>
 </div>
+</section>
+
+<section class="section">
+  <h2>Bundles</h2>
+<!-- BUNDLES -->
+<div class="product-grid">
+  <div class="product-card", class="card" *ngFor="let b of bundles">
+    <img [src]="b.image" [alt]="b.name" />
+    <h3>{{ b.name }}</h3>
+    <p class="price">{{ b.price }} €</p>
+    <button (click)="cart.add(b)">
+      In den Warenkorb
+    </button>
+    <a class="product-grid" [routerLink]="['/product', b.id]">
+      Mehr erfahren
+    </a>
+  </div>
+</div>
+</section>
+
+
+
+<!-- VORTEILE -->
+<section class="features">
+  <div class="feature">🚚 Schneller Versand</div>
+  <div class="feature">🌿 100% Naturrein</div>
+  <div class="feature">🔒 Sichere Bezahlung</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h3>Unser Newsletter</h3>
+  <p>Jetzt anmelden und keine Angebote verpassen!</p>
+
+  <div class="newsletter-form">
+    <input type="email" placeholder="E-Mail Adresse" />
+    <button>Anmelden</button>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+

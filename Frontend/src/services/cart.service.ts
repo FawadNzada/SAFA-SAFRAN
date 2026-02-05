@@ -3,17 +3,17 @@ import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  items = signal<Product[]>([]);
+  private items = signal<Product[]>([]);
 
   add(product: Product) {
-    this.items.update(v => [...v, product]);
+    this.items.update(i => [...i, product]);
   }
 
-  remove(id: number) {
-    this.items.update(v => v.filter(p => p.id !== id));
+  count() {
+    return this.items().length;
   }
 
-  total() {
-    return this.items().reduce((s, p) => s + p.price, 0);
+  getItems() {
+    return this.items();
   }
 }

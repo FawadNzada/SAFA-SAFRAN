@@ -1,20 +1,29 @@
 import { Component } from '@angular/core';
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
+imports: [NgFor, RouterLink];
 import { PRODUCTS } from '../data/products';
+import { Product } from '../../models/product.model';
 import { CartService } from '../../services/cart.service';
 
 @Component({
-  standalone: true,
   selector: 'app-home',
+  standalone: true,
+  imports: [
+    NgFor,
+    RouterLink   
+  ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  products = PRODUCTS.filter(p => p.category === 'single');
-  bundles  = PRODUCTS.filter(p => p.category === 'bundle');
+
+  products: Product[] = PRODUCTS;
+  singles = this.products.filter(p => p.category === 'single');
+  bundles = this.products.filter(p => p.category === 'bundle');
 
   constructor(public cart: CartService) {}
 }
-
 
 
 
