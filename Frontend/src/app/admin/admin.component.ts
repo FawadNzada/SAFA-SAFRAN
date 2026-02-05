@@ -5,6 +5,7 @@ import { AdminService } from '../../services/admin.service';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
 export class AdminComponent {
 
   private adminService = inject(AdminService);

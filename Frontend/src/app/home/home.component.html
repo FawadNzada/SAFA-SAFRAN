@@ -1,31 +1,24 @@
-
-<header class="header">
-  <div class="logo">
-    🌺 <span>SAFA-SAFRAN</span>
-  </div>
-
-  <nav class="nav">
-    <button class="nav-btn">Home</button>
-    <button class="nav-btn">Login</button>
-    <button class="cart-btn">🛒</button>
-  </nav>
-</header>
-
 <section class="hero">
-  <h1>Edle Gewürze. Reiner Genuss.</h1>
-  <p>Premium Safran & Kurkuma – direkt, ehrlich & hochwertig.</p>
+  <h1>Edler Safran aus höchster Qualität</h1>
+  <p>100% Reiner Safran</p>
 </section>
 
-<section class="products">
-  <div class="product-card" *ngFor="let p of products">
-    <div class="badge" *ngIf="p.badge">{{ p.badge }}</div>
-    <h2>{{ p.name }}</h2>
-    <p class="description">{{ p.description }}</p>
-    <p class="price">{{ p.price }} €</p>
-    <button class="buy-btn">In den Warenkorb</button>
+<h2>Unsere Safran Produkte</h2>
+<div class="grid">
+  <div class="card" *ngFor="let p of products">
+    <img [src]="p.image">
+    <h3>{{ p.name }}</h3>
+    <p>{{ p.price }} €</p>
+    <button (click)="cart.add(p)">In den Warenkorb</button>
   </div>
-</section>
+</div>
 
-<footer class="footer">
-  © 2026 SAFA-SAFRAN · HTBL Leonding · Demo SYP
-</footer>
+<h2>Exklusive Sets & Angebote</h2>
+<div class="grid">
+  <div class="card" *ngFor="let b of bundles">
+    <img [src]="b.image">
+    <h3>{{ b.name }}</h3>
+    <p>{{ b.price }} €</p>
+    <button (click)="cart.add(b)">In den Warenkorb</button>
+  </div>
+</div>

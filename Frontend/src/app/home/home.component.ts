@@ -1,4 +1,24 @@
 import { Component } from '@angular/core';
+import { PRODUCTS } from '../data/products';
+import { CartService } from '../../services/cart.service';
+
+@Component({
+  standalone: true,
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
+})
+export class HomeComponent {
+  products = PRODUCTS.filter(p => p.category === 'single');
+  bundles  = PRODUCTS.filter(p => p.category === 'bundle');
+
+  constructor(public cart: CartService) {}
+}
+
+
+
+
+/**import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -31,3 +51,4 @@ export class HomeComponent {
     }
   ];
 }
+**/
