@@ -1,4 +1,5 @@
 using Core.Contracts;
+using Core.Entities;
 
 using Keycloak.AuthServices.Authentication;
 using Keycloak.AuthServices.Authorization;
@@ -14,6 +15,7 @@ using Persistence;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using Base.Web;
 
@@ -99,7 +101,13 @@ services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DemoSyp.db");
+var connectionString = $"Data Source={dbPath}";
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(connectionString));
+
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 var sqLiteBuilder = new SqliteConnectionStringBuilder(connectionString);
 sqLiteBuilder.DataSource = Path.GetFullPath(
@@ -119,6 +127,26 @@ builder.Services
     ;
 
 var app = builder.Build();
+
+// Migrationen anwenden & Standarddaten einfügen
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+
+    if (!db.Products.Any())
+    {
+        db.Products.AddRange(
+            new Product { Name = "Safran 0.5g", Price = 6.9m, Description = "Hochwertiger Safran 0.5g", ImageUrl = "../data/products/safran-05g.png", Category = "Safran" },
+            new Product { Name = "Safran 1g", Price = 11.9m, Description = "Hochwertiger Safran 1g", ImageUrl = "../data/products/safran-1g.png", Category = "Safran" },
+            new Product { Name = "Safran 2g", Price = 19.9m, Description = "Hochwertiger Safran 2g", ImageUrl = "../data/products/safran-2g.png", Category = "Safran" },
+            new Product { Name = "Safran 5g", Price = 35.9m, Description = "Hochwertiger Safran 5g", ImageUrl = "../data/products/safran-5g.png", Category = "Safran" },
+            new Product { Name = "Safran 10g", Price = 49.9m, Description = "Hochwertiger Safran 10g", ImageUrl = "../data/products/safran-10g.png", Category = "Safran" }
+        );
+        db.SaveChanges();
+    }
+}
+
 app.MapControllers();
 
 
