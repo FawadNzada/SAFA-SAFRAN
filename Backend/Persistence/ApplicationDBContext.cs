@@ -42,4 +42,6 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<FDemo>().Map();
         modelBuilder.Entity<DDemo>().Map();
     }
+
+    public DbSet<Product> Products { get; set; }
 }
