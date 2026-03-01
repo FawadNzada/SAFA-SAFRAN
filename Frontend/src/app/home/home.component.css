@@ -18,12 +18,16 @@ h2 {
 
 /* HERO */
 .hero {
-  height: 550px;
+  height: 650px;
+
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)),
-    url('/assets/hero/hero-safran.png');
+    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+    url("/assets/hero/hero-safran.png");
+
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
   align-items: center;
   justify-content: center;

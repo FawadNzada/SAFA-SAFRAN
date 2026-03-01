@@ -1,9 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+/* ===== GLOBAL RESET ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto;          /* wichtig: nicht 100vh */
+  min-height: 0;         /* wichtig: nicht 100vh */
+}
 
 body {
-  margin: 0;
-  background: #f6f1e7;
-  font-family: 'Playfair Display', serif;
-  color: #3b1a1a;
-  
+  /* dein Seiten-Background */
+  background: linear-gradient(to bottom, #2b1c05, #0f1418);
+  background-attachment: fixed;
+}
+
+/* Angular root darf NICHT 100vh erzwingen */
+app-root {
+  display: block;
+  height: auto;
+  min-height: 0;
+}
+
+/* Falls irgendwo main verwendet wird */
+main {
+  display: block;
+  height: auto;
+  min-height: 0;
 }

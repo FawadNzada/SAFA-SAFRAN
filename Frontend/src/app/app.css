@@ -33,3 +33,17 @@ ul li a {
 body {
   padding-top: 80px; /* damit der Content nicht unter dem fixen Header ist */
 }
+
+:host {
+  display: block;
+  height: auto;
+  min-height: 0;
+}
+
+/* Falls du irgendwo einen Wrapper hast */
+.page,
+.content,
+.main {
+  height: auto;
+  min-height: 0;
+}
