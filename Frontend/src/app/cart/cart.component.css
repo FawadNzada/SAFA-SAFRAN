@@ -1,0 +1,129 @@
+.wrap{
+  max-width: 1200px;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+  padding: 0 14px;
+}
+
+.left{
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.summary .box{
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 16px;
+  position: sticky;
+  top: 16px;
+}
+
+.item{
+  display: grid;
+  grid-template-columns: 110px 1fr 140px;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  align-items: center;
+}
+
+.thumb{
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.25);
+}
+
+.name{
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.meta{ opacity: .9; }
+.stock{ color: #46ff7a; font-weight: 800; margin-top: 6px; }
+
+.actions{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.qtyBtn{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.25);
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.qty{
+  width: 28px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.link{
+  margin-left: 12px;
+  background: transparent;
+  border: none;
+  color: #ffd27a;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.right{
+  text-align: right;
+  font-weight: 700;
+}
+
+.price{
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.line{
+  margin-top: 10px;
+  opacity: .95;
+}
+
+.clear{
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.checkout{
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 900;
+  background: linear-gradient(180deg,#ffd76a,#f5b700);
+  color: #000;
+  transition: 0.2s;
+}
+
+.checkout:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.empty{ opacity: .9; padding: 10px 0; }
+.sumLine{ font-size: 16px; }
+.small{ margin-top: 8px; opacity: .9; }

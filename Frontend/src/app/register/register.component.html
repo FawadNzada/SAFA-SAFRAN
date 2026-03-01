@@ -1,0 +1,20 @@
+<div class="box">
+  <h1>Registrieren</h1>
+
+  <div class="err" *ngIf="error">{{ error }}</div>
+
+  <label>Username</label>
+  <input [(ngModel)]="username" placeholder="z.B. junior" />
+
+  <label>E-Mail</label>
+  <input [(ngModel)]="email" placeholder="z.B. junior@mail.com" />
+
+  <label>Passwort</label>
+  <input [(ngModel)]="password" type="password" placeholder="mind. 6 Zeichen" />
+
+  <button (click)="submit()">Konto erstellen</button>
+
+  <p class="hint">
+    Schon ein Konto? <a routerLink="/login">Login</a>
+  </p>
+</div>

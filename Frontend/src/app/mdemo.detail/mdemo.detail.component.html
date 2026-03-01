@@ -1,22 +1,29 @@
-<h2>MDemos</h2>
+<div class="product" *ngIf="demo as p">
 
-@if (mdemo != null) {
+  <div class="left">
+    <img class="mainImage" [src]="p.image || 'assets/LOGO.png'" [alt]="p.name">
+  </div>
 
-    <div class="container mt-3">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td>Name</td>
-                    <td>{{mdemo.name}}</td>
-                </tr>
-                <tr>
-                    <td>fDemoId</td>
-                    <td>{{mdemo.fDemoId}}</td>
-                </tr>
+  <div class="right">
+    <h1 class="title">{{ p.name }}</h1>
 
-            </tbody>
-        </table>
+    <div class="rating">★★★★★ <span class="count">(25)</span></div>
+
+    <div class="price" *ngIf="p.price !== undefined">
+      € {{ p.price }}
     </div>
-} @else {
-    <p>No mdemo selected</p>
-}
+
+    <div class="meta">
+      <div *ngIf="p.weight"><b>Gewicht:</b> {{ p.weight }}</div>
+      <div><b>Versand:</b> Kostenlos</div>
+      <div class="stock">Auf Lager</div>
+    </div>
+
+    <button class="buyBtn" (click)="addToCart()">
+      In den Warenkorb
+    </button>
+  </div>
+
+</div>
+
+<p *ngIf="!demo">Lade Produkt...</p>

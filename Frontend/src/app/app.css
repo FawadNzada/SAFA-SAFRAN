@@ -29,3 +29,7 @@ ul li a {
   position: absolute;
   width: 720px;
 }
+
+body {
+  padding-top: 80px; /* damit der Content nicht unter dem fixen Header ist */
+}

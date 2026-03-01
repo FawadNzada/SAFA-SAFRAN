@@ -1,0 +1,17 @@
+<div class="box">
+  <h1>Login</h1>
+
+  <div class="err" *ngIf="error">{{ error }}</div>
+
+  <label>E-Mail oder Username</label>
+  <input [(ngModel)]="identifier" placeholder="z.B. junior oder junior@mail.com" />
+
+  <label>Passwort</label>
+  <input [(ngModel)]="password" type="password" placeholder="******" />
+
+  <button (click)="submit()">Einloggen</button>
+
+  <p class="hint">
+    Kein Konto? <a routerLink="/register">Registrieren</a>
+  </p>
+</div>

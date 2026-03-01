@@ -2,29 +2,34 @@
 
 <div class="container mt-3">
 
-    <h1>MDemo Overview</h1>
+  <h1>Produkte</h1>
 
-    <button class="btn btn-info mb-3" (click)="addMDemo()">Add new Demo</button>
+  <div class="grid">
+    <a class="card"
+       *ngFor="let p of filteredMdemos"
+       (click)="showDemo(p)">
 
+      <div class="imgWrap">
+        <img [src]="p.image || 'assets/LOGO.png'" [alt]="p.name">
+      </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (mdemo of mdemos; track mdemo; let idx = $index) {
-            <tr>
-                <td>{{mdemo.name}}</td>
-                <td><button class="btn btn-info btn-sm" (click)="showMDemo(mdemo)">Detail</button></td>
-                <td><button class="btn btn-info btn-sm" (click)="editMDemo(mdemo)">Edit</button></td>
-                <td><button class="btn btn-danger btn-sm" (click)="deleteMDemo(mdemo)">Delete</button></td>
-            </tr>
-            }
-        </tbody>
-    </table>
+      <div class="info">
+        <div class="title">{{ p.name }}</div>
+
+        <div class="meta">
+          <span *ngIf="p.weight">{{ p.weight }}</span>
+        </div>
+
+        <div class="price" *ngIf="p.price !== undefined">
+          € {{ p.price }}
+        </div>
+      </div>
+
+    </a>
+  </div>
+
+  <p *ngIf="filteredMdemos.length === 0" class="empty">
+    Keine Produkte gefunden.
+  </p>
+
 </div>

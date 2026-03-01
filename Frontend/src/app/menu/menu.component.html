@@ -1,13 +1,46 @@
 <header class="header">
-  <!-- LINKS: LOGO -->
+
   <div class="logo">
     <img src="assets/LOGO.png" alt="SAFA Logo">
   </div>
 
-  <!-- RECHTS: NAVIGATION -->
   <nav class="nav">
+
     <a routerLink="/home">Startseite</a>
-    <a routerLink="/produkte">Produkte</a>
+    <a routerLink="/mdemos">Produkte</a>
+
+    <div class="search-wrapper">
+
+      <div class="search">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Produkt suchen..."
+          (input)="onSearchInput()"
+          (keyup.enter)="search()"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
+        />
+        <button (click)="search()">Suchen</button>
+      </div>
+
+      <div class="suggestions" *ngIf="showSuggestions">
+        <div
+          class="suggestion-item"
+          *ngFor="let p of suggestions"
+          (mousedown)="openSuggestion(p)"
+        >
+          {{ p.name || ('Produkt #' + p.id) }}
+        </div>
+      </div>
+
+    </div>
+
     <a routerLink="/cart">Warenkorb ({{ cart.count() }})</a>
+
+    <span *ngIf="authenticated">{{ username }}</span>
+    <button *ngIf="!authenticated" (click)="goLogin()">Login</button>
+    <button *ngIf="authenticated" (click)="logout()">Logout</button>
+
   </nav>
 </header>

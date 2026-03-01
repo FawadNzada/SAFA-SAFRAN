@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "Safran 0.5g", "weight": "0.5g", "price": 14.99, "image": "assets/products/safran-05g.png" },
+  { "id": 2, "name": "Safran 1g",   "weight": "1g",   "price": 24.99, "image": "assets/products/safran-1g.png" },
+  { "id": 3, "name": "Safran 2g",   "weight": "2g",   "price": 44.99, "image": "assets/products/safran-2g.png" },
+  { "id": 4, "name": "Safran 5g",   "weight": "5g",   "price": 99.99, "image": "assets/products/safran-5g.png" },
+  { "id": 5, "name": "Safran 10g",  "weight": "10g",  "price": 179.99,"image": "assets/products/safran-10g.png" }
+]

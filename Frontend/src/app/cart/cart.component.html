@@ -1,0 +1,61 @@
+<div class="wrap">
+
+  <div class="left">
+    <h1>Warenkorb</h1>
+
+    <div *ngIf="items.length === 0" class="empty">
+      Dein Warenkorb ist leer.
+    </div>
+
+    <div class="item" *ngFor="let it of items">
+
+      <img class="thumb"
+           [src]="it.image"
+           [alt]="it.name"
+           (error)="onImgError($event)">
+
+      <div class="mid">
+        <div class="name">{{ it.name }}</div>
+
+        <div class="meta" *ngIf="it.weight">Gewicht: {{ it.weight }}</div>
+
+        <div class="stock">Auf Lager</div>
+
+        <div class="actions">
+          <button class="qtyBtn" (click)="dec(it.id)">−</button>
+          <div class="qty">{{ it.qty }}</div>
+          <button class="qtyBtn" (click)="inc(it.id)">+</button>
+
+          <button class="link" (click)="remove(it.id)">Entfernen</button>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="price">{{ it.price | number:'1.2-2' }} €</div>
+        <div class="line">
+          Zwischensumme:
+          <b>{{ (it.price * it.qty) | number:'1.2-2' }} €</b>
+        </div>
+      </div>
+
+    </div>
+
+    <button *ngIf="items.length > 0" class="clear" (click)="clear()">
+      Warenkorb leeren
+    </button>
+  </div>
+
+  <div class="summary" *ngIf="items.length > 0">
+    <div class="box">
+      <div class="sumLine">
+        Zwischensumme ({{ cart.count() }} Artikel):
+        <b>{{ subtotal() | number:'1.2-2' }} €</b>
+      </div>
+
+      <div class="small">Versand: Kostenlos</div>
+
+      <button class="checkout">Zur Kasse</button>
+    </div>
+  </div>
+
+</div>

@@ -1,39 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-
-import { Component, OnInit, InputSignal, input, inject, effect } from '@angular/core';
-import { MDemo } from '../../models/mdemo.model';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { CartService } from '../../services/cart.service';
+import { MDemo } from '../../models/mdemo.model';
 
 @Component({
-  selector: 'app-mdemo.detail',
+  selector: 'app-mdemo-detail',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './mdemo.detail.component.html',
   styleUrls: ['./mdemo.detail.component.css'],
-  imports: [CommonModule],
 })
-export class MDemoDetailComponent {
+export class MDemoDetailComponent implements OnInit {
 
-  mdemo: MDemo | undefined;
-  id: InputSignal<number | undefined> = input();
+  demo?: MDemo;
 
-  private dataService = inject(DataService);
-  private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private dataService = inject(DataService);
+  private cart = inject(CartService);
 
-  constructor() {
-    effect(() => {
-      this.load();
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.dataService.getMDemo(id).subscribe({
+      next: (d) => this.demo = d,
+      error: (e) => console.error('Detail load error:', e)
     });
   }
 
-  load(): void {
-    this.dataService.getMDemo(this.id()!).subscribe({
-      next: data => {
-        this.mdemo = data;
-      },
-      error: error => {
-        console.error('Error loading mdemo:', error);
-      }
-    });
+  addToCart() {
+    if (!this.demo) return;
+    this.cart.add({
+      id: this.demo.id,
+      name: this.demo.name,
+      price: this.demo.price ?? 0,
+      image: this.demo.image ?? 'assets/LOGO.png',
+      weight: this.demo.weight
+    }, 1);
   }
 }

@@ -1,53 +1,68 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { MDemo, MDemoOverview } from '../models/mdemo.model';
-import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
+import { MDemo, MDemoOverview } from '../models/mdemo.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private apiUrl = "/api";  // will be replaced by environment variable
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { 
-    this.apiUrl = environment.apiUrl;
-    console.log("API URL: " + this.apiUrl);
+  // ✅ Liste aus assets (kein Backend nötig)
+  getMDemos(): Observable<MDemoOverview[]> {
+    return this.http.get<MDemoOverview[]>('assets/mock-products.json');
   }
 
-  getMDemos() {
-    return this.http.get<MDemoOverview[]>(`${this.apiUrl}/demo`);
-  }
-  
-  getMDemo(id: number) {
-    return this.http.get<MDemo>(`${this.apiUrl}/demo/${id}`);
+  // ✅ Detail aus assets (liefert ALLE Felder wie image/price/weight)
+  getMDemo(id: number): Observable<MDemo> {
+    return new Observable<MDemo>((subscriber) => {
+      this.http.get<any[]>('assets/mock-products.json').subscribe({
+        next: (list) => {
+          const item = list.find(x => Number(x.id) === Number(id));
+          if (!item) {
+            subscriber.error('Not found');
+            return;
+          }
+
+          // ✅ Wichtig: item direkt zurückgeben -> enthält image/price/weight
+          subscriber.next(item as MDemo);
+          subscriber.complete();
+        },
+        error: (err) => subscriber.error(err)
+      });
+    });
   }
 
-  updateMDemo(mdemo: MDemo) {
-    const url = `${this.apiUrl}/demo/${mdemo.id}`;
-    return this.http.put(url, mdemo);
+  // ✅ Update Dummy (damit nichts kaputt geht)
+  updateMDemo(mdemo: MDemo): Observable<any> {
+    console.warn('updateMDemo() is mocked (no backend).', mdemo);
+    return of({ ok: true });
   }
 
-  addMDemo(name: string, age: number, minPlayers: number|null, maxPlayers: number|null): Observable<MDemo> {
+  // ✅ Add Dummy
+  addMDemo(
+    name: string,
+    age: number,
+    minPlayers: number | null,
+    maxPlayers: number | null
+  ): Observable<MDemo> {
+    console.warn('addMDemo() is mocked (no backend).', { name, age, minPlayers, maxPlayers });
 
-    const url = `${this.apiUrl}/demo`;
-    let createMDemoDto: MDemo = {
-      id: 0,
-      name: name,
+    const created: MDemo = {
+      id: Date.now(),
+      name,
       fDemoId: 1
     };
 
-    return this.http.post<MDemo>(url, createMDemoDto);
-  }  
+    return of(created);
+  }
 
-  deleteMDemo(id: number) {
-    const url = `${this.apiUrl}/demo/${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+  // ✅ Delete Dummy
+  deleteMDemo(id: number): Observable<string> {
+    console.warn('deleteMDemo() is mocked (no backend). id=', id);
+    return of('ok');
   }
 }
