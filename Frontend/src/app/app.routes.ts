@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { authGuard } from './auth/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -35,6 +36,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'cart', component: CartComponent },
-
+  { path: 'checkout', component: CheckoutComponent },
   { path: '**', redirectTo: '/home' },
 ];
