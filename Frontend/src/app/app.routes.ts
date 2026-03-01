@@ -14,6 +14,10 @@ import { authGuard } from './auth/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { checkoutStepGuard } from './auth/checkout-step.guard';
+import { CheckoutAddressComponent } from './checkout/address.component';
+import { CheckoutPaymentComponent } from './checkout/payment.component';
+import { CheckoutReviewComponent } from './checkout/review.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -37,5 +41,9 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout/address', component: CheckoutAddressComponent, canActivate: [checkoutStepGuard] },
+  { path: 'checkout/payment', component: CheckoutPaymentComponent, canActivate: [checkoutStepGuard] },
+  { path: 'checkout/review', component: CheckoutReviewComponent, canActivate: [checkoutStepGuard] },
+
   { path: '**', redirectTo: '/home' },
 ];
