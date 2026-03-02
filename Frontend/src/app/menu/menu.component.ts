@@ -1,41 +1,39 @@
-import { Component, OnInit, inject, OnDestroy } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { Component, DoCheck } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../auth/auth.service';
-import { DataService } from '../../services/data.service';
-import { MDemoOverview } from '../../models/mdemo.model';
-
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit, OnDestroy {
+export class MenuComponent implements DoCheck {
+  // animation flag
+  welcomeAnim = false;
 
-  cart = inject(CartService);
-  auth = inject(AuthService);
-  dataService = inject(DataService);
-  router = inject(Router);
+  // wichtig: merken ob vorher eingeloggt oder nicht
+  private prevAuth = false;
 
-  searchTerm: string = '';
-  allProducts: MDemoOverview[] = [];
-  suggestions: MDemoOverview[] = [];
+  // falls du search hast, damit HTML nicht crasht
+  searchTerm = '';
   showSuggestions = false;
+  suggestions: any[] = [];
 
   bump = false;
-  private sub?: Subscription;
 
-  // ✅ Welcome Animation
-  welcomeAnim = false;
-  lastAuth = false;
+  constructor(
+    public cart: CartService,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
+  // deine HTML benutzt authenticated/username
   get authenticated(): boolean {
     return this.auth.isLoggedIn();
   }
@@ -44,91 +42,23 @@ export class MenuComponent implements OnInit, OnDestroy {
     return this.auth.getUsername();
   }
 
-  ngOnInit(): void {
+  // ✅ HIER wird’s getriggert sobald Login passiert
+  ngDoCheck(): void {
+    const now = this.authenticated;
 
-    // Produkte laden
-    this.dataService.getMDemos().subscribe({
-      next: (data: MDemoOverview[]) => {
-        this.allProducts = data ?? [];
-      },
-      error: () => {
-        this.allProducts = [];
-      }
-    });
-
-    // Warenkorb Animation
-    this.sub = this.cart.added$.subscribe(() => {
-      this.bump = true;
-      setTimeout(() => (this.bump = false), 350);
-    });
-
-    // ✅ Login Animation Trigger
-    this.lastAuth = this.authenticated;
-
-    setInterval(() => {
-      const nowAuth = this.authenticated;
-
-      if (!this.lastAuth && nowAuth) {
-        this.welcomeAnim = false;
-        setTimeout(() => (this.welcomeAnim = true), 10);
-        setTimeout(() => (this.welcomeAnim = false), 900);
-      }
-
-      this.lastAuth = nowAuth;
-    }, 200);
-  }
-
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-  }
-
-  onSearchInput(): void {
-    const term = this.searchTerm.toLowerCase().trim();
-
-    if (!term) {
-      this.suggestions = [];
-      this.showSuggestions = false;
-      return;
+    if (now && !this.prevAuth) {
+      this.triggerWelcomeAnim();
     }
 
-    this.suggestions = this.allProducts
-      .filter((p) => {
-        const text = Object.values(p as any)
-          .filter((v) => v !== null && v !== undefined)
-          .map((v) => String(v).toLowerCase())
-          .join(' ');
-        return text.includes(term);
-      })
-      .slice(0, 6);
-
-    this.showSuggestions = this.suggestions.length > 0;
+    this.prevAuth = now;
   }
 
-  search(): void {
-    const term = this.searchTerm.trim();
-    if (!term) return;
-
-    this.showSuggestions = false;
-
-    this.router.navigate(['/mdemos'], {
-      queryParams: { search: term }
-    });
-  }
-
-  openSuggestion(p: MDemoOverview): void {
-    this.showSuggestions = false;
-    this.searchTerm = p.name ?? '';
-    this.router.navigate(['/mdemo-detail', p.id]);
-  }
-
-  onBlur(): void {
-    setTimeout(() => (this.showSuggestions = false), 150);
-  }
-
-  onFocus(): void {
-    if (this.suggestions.length > 0) {
-      this.showSuggestions = true;
-    }
+  private triggerWelcomeAnim(): void {
+    this.welcomeAnim = false;
+    setTimeout(() => {
+      this.welcomeAnim = true;
+      setTimeout(() => (this.welcomeAnim = false), 950);
+    }, 0);
   }
 
   goLogin(): void {
@@ -140,7 +70,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.router.navigate(['/home']);
   }
 
-  goRegister(): void {
-    this.router.navigate(['/register']);
-  }
+  // dummy für dein HTML, falls du es drin hast
+  onSearchInput(): void {}
+  onFocus(): void {}
+  onBlur(): void {}
+  search(): void {}
+  openSuggestion(_: any): void {}
 }

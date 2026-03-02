@@ -1,11 +1,14 @@
 <header class="header">
 
-  <a class="logo logo-link" routerLink="/home" aria-label="Zur Startseite">
-    <img src="assets/LOGO.png" alt="SAFA Logo" />
+  <a class="logo-link" routerLink="/home">
+    <div class="logo">
+      <img src="assets/LOGO.png" alt="SAFA Logo" />
+    </div>
   </a>
 
   <nav class="nav">
 
+    <!-- Produkte -->
     <a routerLink="/mdemos">Produkte</a>
 
     <div class="search-wrapper">
@@ -37,7 +40,7 @@
       Warenkorb <span class="badge">({{ cart.count() }})</span>
     </a>
 
-    <!-- Willkommen -->
+    <!-- ✅ Willkommen + Animation -->
     <span
       class="welcome"
       *ngIf="authenticated"
@@ -46,24 +49,12 @@
       Willkommen {{ username }}
     </span>
 
-    <a class="account-link" *ngIf="authenticated" routerLink="/account">Konto</a>
+    <a class="account-link" routerLink="/account" *ngIf="authenticated">
+      Konto
+    </a>
 
-    <!-- Login / Logout -->
-    <button
-      class="login-btn"
-      *ngIf="!authenticated"
-      (click)="goLogin()"
-    >
-      Login
-    </button>
-
-    <button
-      class="logout-btn"
-      *ngIf="authenticated"
-      (click)="logout()"
-    >
-      Logout
-    </button>
+    <button *ngIf="!authenticated" (click)="goLogin()">Login</button>
+    <button *ngIf="authenticated" (click)="logout()">Logout</button>
 
   </nav>
 </header>
