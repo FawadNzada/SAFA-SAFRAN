@@ -1,3 +1,9 @@
+/* ========================= */
+/* PREMIUM BLACK & GOLD NAV */
+/* ========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500;600&display=swap');
+
 .header {
   position: fixed;
   top: 0;
@@ -10,25 +16,55 @@
   align-items: center;
 
   padding: 0 40px;
-  background-color: #7b1e1e;
+  background: #0f0f0f; /* Schwarz */
+  border-bottom: 1px solid rgba(212,175,55,0.3);
   z-index: 1000;
+
+  font-family: 'Poppins', sans-serif;
 }
+
+/* ========================= */
+/* LOGO */
+/* ========================= */
 
 .logo img {
   height: 45px;
 }
 
+.logo-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* ========================= */
+/* NAV LINKS */
+/* ========================= */
+
 .nav {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
 }
 
 .nav a {
-  color: white;
+  color: #d4af37; /* Gold */
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
 }
+
+.nav a:hover {
+  color: #f5d76e;
+  text-shadow: 0 0 6px rgba(212,175,55,0.5);
+}
+
+/* ========================= */
+/* SUCHLEISTE */
+/* ========================= */
 
 .search-wrapper {
   position: relative;
@@ -36,41 +72,232 @@
 
 .search {
   display: flex;
-  gap: 6px;
+  align-items: center;
+  background: #1a1a1a;
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 30px;
+  padding: 4px;
+  transition: 0.3s ease;
 }
 
 .search input {
-  padding: 6px 10px;
-  width: 220px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  padding: 8px 16px;
+  width: 240px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #d4af37;
+  font-size: 14px;
+}
+
+.search input::placeholder {
+  color: rgba(212,175,55,0.6);
 }
 
 .search button {
-  padding: 6px 12px;
-  background: black;
-  color: white;
+  height: 32px;
+  min-width: 90px;
+  padding: 0 14px;
+  border-radius: 20px;
   border: none;
+  background: linear-gradient(135deg, #d4af37, #b8962e);
+  color: #0f0f0f;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s ease;
 }
+
+.search button:hover {
+  box-shadow: 0 0 12px rgba(212,175,55,0.6);
+  transform: scale(1.05);
+}
+
+.search:focus-within {
+  box-shadow: 0 0 15px rgba(212,175,55,0.4);
+}
+
+/* ========================= */
+/* SUGGESTIONS DROPDOWN (FIX) */
+/* ========================= */
 
 .suggestions {
   position: absolute;
-  top: 42px;
+  top: 46px;              /* direkt unter der Search */
   left: 0;
   width: 100%;
   background: #111;
-  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
   overflow: hidden;
-  z-index: 9999;
+  z-index: 99999;         /* immer ganz oben */
+
+  box-shadow: 0 14px 30px rgba(0,0,0,0.55);
 }
 
 .suggestion-item {
-  padding: 10px 12px;
-  color: white;
+  padding: 10px 14px;
+  color: #d4af37;
   cursor: pointer;
+  font-size: 14px;
+  background: transparent;
 }
 
 .suggestion-item:hover {
-  background: rgba(255,255,255,0.15);
+  background: rgba(212, 175, 55, 0.12);
+}
+
+/* ========================= */
+/* WARENKORB */
+/* ========================= */
+
+.cart-link {
+  font-weight: 600;
+}
+
+/* ========================= */
+/* WILLKOMMEN */
+/* ========================= */
+
+.welcome {
+  color: #d4af37;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ========================= */
+/* LOGIN / LOGOUT BUTTONS */
+/* ========================= */
+
+.nav button {
+  height: 36px;
+  min-width: 100px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid #d4af37;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  background: transparent;
+  color: #d4af37;
+
+  transition: 0.3s ease;
+}
+
+.nav button:hover {
+  background: #d4af37;
+  color: #0f0f0f;
+  box-shadow: 0 0 12px rgba(212,175,55,0.5);
+}
+
+/* ========================= */
+/* PREMIUM ANIMATION */
+/* ========================= */
+
+.welcome-anim {
+  animation: luxuryFade 0.8s ease-out;
+}
+
+@keyframes luxuryFade {
+  0% { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.account-link {
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,0.45);
+  transition: 0.25s ease;
+}
+
+.account-link:hover {
+  background: #d4af37;
+  color: #0f0f0f;
+  box-shadow: 0 0 12px rgba(212,175,55,0.45);
+}
+
+/* ========================= */
+/* RESPONSIVE FIX (NICHT ERSETZEN, NUR UNTEN ANFÜGEN) */
+/* ========================= */
+
+/* Suchfeld darf flexibel werden (statt fix 240px) */
+.search input {
+  width: 100%;
+  min-width: 140px;
+}
+
+/* Wrapper darf wachsen/schrumpfen */
+.search-wrapper {
+  flex: 1;
+  min-width: 220px;
+  max-width: 520px;
+}
+
+/* Unter 980px: Header darf umbrechen statt verschieben */
+@media (max-width: 980px) {
+  .header {
+    height: auto;           /* wichtig: nicht fix 70px */
+    flex-wrap: wrap;        /* wichtig: umbrechen */
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .logo-link {
+    order: 1;
+  }
+
+  .nav {
+    order: 2;
+    flex-wrap: wrap;        /* willkommen/konto/logout umbrechen */
+    justify-content: center;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .search-wrapper {
+    order: 3;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  /* weil header höher wird -> content nicht überdecken */
+  body {
+    padding-top: 130px;
+  }
+}
+
+/* Unter 600px: alles kompakter */
+@media (max-width: 600px) {
+  .nav a {
+    font-size: 13px;
+  }
+
+  .welcome {
+    font-size: 13px;
+  }
+
+  .search button {
+    min-width: 75px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  .nav button {
+    min-width: 85px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  body {
+    padding-top: 150px;
+  }
 }

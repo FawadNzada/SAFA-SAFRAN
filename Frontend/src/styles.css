@@ -25,3 +25,8 @@ main {
   height: auto;
   min-height: 0;
 }
+
+/* Abstand wegen fixer Navbar */
+body {
+  padding-top: 70px;
+}

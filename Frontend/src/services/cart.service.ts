@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart-item.model';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
+
   private KEY = 'safa_cart';
 
   private itemsSubject = new BehaviorSubject<CartItem[]>(this.load());
@@ -39,6 +41,8 @@ export class CartService {
     else items.push({ ...product, qty });
 
     this.save(items);
+
+    this.emitAdded(); // ✅ ANIMATION TRIGGER
   }
 
   increase(id: number) {
@@ -55,10 +59,12 @@ export class CartService {
     if (!it) return;
 
     it.qty -= 1;
+
     if (it.qty <= 0) {
       this.save(items.filter(x => x.id !== id));
       return;
     }
+
     this.save(items);
   }
 
@@ -68,5 +74,13 @@ export class CartService {
 
   clear() {
     this.save([]);
+  }
+
+  // 🔥 Animation Event
+  private addedSubject = new Subject<void>();
+  added$ = this.addedSubject.asObservable();
+
+  private emitAdded() {
+    this.addedSubject.next();
   }
 }
