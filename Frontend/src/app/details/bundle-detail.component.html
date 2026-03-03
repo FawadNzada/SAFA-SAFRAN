@@ -1,0 +1,226 @@
+<div class="page" *ngIf="bundle; else notFound">
+  <div class="container">
+
+    <div class="top">
+      <div class="gallery">
+        <div class="imageBox">
+          <img [src]="bundle.image || 'assets/LOGO.png'" [alt]="bundle.name" />
+        </div>
+
+        <div class="thumbRow">
+          <div class="thumb active">
+            <img [src]="bundle.image || 'assets/LOGO.png'" [alt]="bundle.name" />
+          </div>
+          <div class="thumb">
+            <img src="assets/LOGO.png" alt="SAFA" />
+          </div>
+          <div class="thumb">
+            <img src="assets/LOGO.png" alt="SAFA" />
+          </div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h1 class="title">{{ bundle.name }}</h1>
+
+        <div class="ratingRow">
+          <div class="stars">
+            <span class="star on" *ngFor="let _ of stars(avgRating)">★</span>
+            <span class="star" *ngFor="let _ of starsEmpty(avgRating)">★</span>
+          </div>
+
+          <div class="ratingMeta">
+            <span class="avg">{{ avgRating }}</span>
+            <span class="count">({{ ratingCount }})</span>
+          </div>
+        </div>
+
+        <div class="price">{{ displayPrice }}</div>
+
+        <div class="meta">
+          <div class="metaLine">
+            <span class="label">Gewicht:</span>
+            <span>{{ displayWeight || '—' }}</span>
+          </div>
+          <div class="metaLine">
+            <span class="label">Versand:</span>
+            <span>Kostenlos</span>
+          </div>
+          <div class="metaLine">
+            <span class="label">Status:</span>
+            <span class="stock" [class.ok]="inStock">
+              {{ inStock ? 'Auf Lager' : 'Nicht verfügbar' }}
+            </span>
+          </div>
+        </div>
+
+        <ul class="bullets">
+          <li *ngFor="let b of shortBullets">{{ b }}</li>
+        </ul>
+
+        <div class="buyRow">
+          <div class="qty">
+            <button type="button" (click)="decQty()">−</button>
+            <input type="number" [(ngModel)]="qty" min="1" />
+            <button type="button" (click)="incQty()">+</button>
+          </div>
+
+          <button class="btnPrimary" type="button" (click)="addToCart()">
+            In den Warenkorb
+          </button>
+        </div>
+
+        <div class="trustRow">
+          <div class="trust">✓ Sicher bezahlen</div>
+          <div class="trust">✓ Schneller Versand</div>
+          <div class="trust">✓ Premium Qualität</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sections">
+      <div class="tabs">
+        <button (click)="setSection('desc')" [class.active]="openSection==='desc'">Beschreibung</button>
+        <button (click)="setSection('usage')" [class.active]="openSection==='usage'">Anwendung</button>
+        <button (click)="setSection('details')" [class.active]="openSection==='details'">Details</button>
+        <button (click)="setSection('shipping')" [class.active]="openSection==='shipping'">Versand & Retouren</button>
+        <button (click)="setSection('reviews')" [class.active]="openSection==='reviews'">Rezensionen</button>
+      </div>
+
+      <div class="panel" *ngIf="openSection==='desc'">
+        <h2>Bundlebeschreibung</h2>
+        <p class="text">{{ descriptionText }}</p>
+
+        <div class="highlightGrid">
+          <div class="highlightCard">
+            <div class="hTitle">Auswahl</div>
+            <div class="hText">Hochwertig kombiniert für das beste Ergebnis.</div>
+          </div>
+          <div class="highlightCard">
+            <div class="hTitle">Geschenk</div>
+            <div class="hText">Ideal zum Verschenken – edel und praktisch.</div>
+          </div>
+          <div class="highlightCard">
+            <div class="hTitle">Qualität</div>
+            <div class="hText">Premium Produkte, aromaschützend verpackt.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" *ngIf="openSection==='usage'">
+        <h2>So nutzt du das Bundle</h2>
+        <ul class="steps">
+          <li *ngFor="let u of usageText">{{ u }}</li>
+        </ul>
+
+        <div class="tipBox">
+          <strong>Tipp:</strong> Safran immer kurz ziehen lassen (Wasser/Milch), dann erst ins Gericht.
+        </div>
+      </div>
+
+      <div class="panel" *ngIf="openSection==='details'">
+        <h2>Bundle Details</h2>
+        <div class="detailsTable">
+          <div class="row" *ngFor="let d of detailsList">
+            <div class="k">{{ d.label }}</div>
+            <div class="v">{{ d.value }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" *ngIf="openSection==='shipping'">
+        <h2>Versand & Retouren</h2>
+        <ul class="list">
+          <li *ngFor="let s of shippingList">{{ s }}</li>
+        </ul>
+
+        <div class="tipBox">
+          <strong>Hinweis:</strong> Demo-Texte – später kannst du hier echte Infos aus dem Backend anzeigen.
+        </div>
+      </div>
+
+      <div class="panel" *ngIf="openSection==='reviews'">
+        <div class="reviewsHeader">
+          <div>
+            <h2>Kundenrezensionen</h2>
+            <div class="reviewMeta">
+              <span class="big">{{ avgRating }}</span>
+              <span class="small">von 5</span>
+              <span class="sep">•</span>
+              <span>{{ ratingCount }} Bewertungen</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviewForm">
+          <h3>Deine Rezension</h3>
+
+          <div class="formGrid">
+            <label>
+              <span>Name</span>
+              <input type="text" [(ngModel)]="reviewName" placeholder="z.B. Sebastian" />
+            </label>
+
+            <label>
+              <span>Bewertung</span>
+              <select [(ngModel)]="reviewRating">
+                <option [ngValue]="5">5 – Sehr gut</option>
+                <option [ngValue]="4">4 – Gut</option>
+                <option [ngValue]="3">3 – Ok</option>
+                <option [ngValue]="2">2 – Eher schlecht</option>
+                <option [ngValue]="1">1 – Schlecht</option>
+              </select>
+            </label>
+
+            <label class="full">
+              <span>Titel</span>
+              <input type="text" [(ngModel)]="reviewTitle" placeholder="Kurz & ehrlich (z.B. Mega!)" />
+            </label>
+
+            <label class="full">
+              <span>Text</span>
+              <textarea [(ngModel)]="reviewText" rows="4" placeholder="Was hat dir gefallen?"></textarea>
+            </label>
+          </div>
+
+          <button class="btnPrimary" type="button" (click)="submitReview()">Rezension absenden</button>
+        </div>
+
+        <div class="reviewList" *ngIf="reviews.length > 0; else noReviews">
+          <div class="reviewCard" *ngFor="let r of reviews">
+            <div class="rTop">
+              <div class="rName">{{ r.name }}</div>
+              <div class="rVerified" *ngIf="r.verified">Verifizierter Kauf</div>
+              <div class="rDate">{{ formatDate(r.dateIso) }}</div>
+            </div>
+
+            <div class="rStars">
+              <span class="star on" *ngFor="let _ of stars(r.rating)">★</span>
+              <span class="star" *ngFor="let _ of starsEmpty(r.rating)">★</span>
+            </div>
+
+            <div class="rTitle">{{ r.title }}</div>
+            <div class="rText">{{ r.text }}</div>
+
+            <div class="rActions">
+              <button class="btnGhost" type="button" *ngIf="r.canDelete" (click)="deleteReview(r.id)">
+                Löschen
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noReviews>
+          <div class="emptyReviews">Noch keine Bewertungen – sei der Erste 🙂</div>
+        </ng-template>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #notFound>
+  <div class="container">
+    <div class="notFound">Bundle nicht gefunden.</div>
+  </div>
+</ng-template>

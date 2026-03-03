@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { CartService } from '../../services/cart.service';
+import { SessionService } from '../../services/session.service';
 import { PRODUCTS } from '../data/products';
 import { Product } from '../../models/product.model';
 
@@ -14,9 +16,9 @@ import { Product } from '../../models/product.model';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent {
-  authenticated = true;
-  username = 'user';
+export class MenuComponent implements OnDestroy {
+  authenticated = false;
+  username = '';
   welcomeAnim = false;
 
   searchTerm = '';
@@ -25,7 +27,23 @@ export class MenuComponent {
 
   bump = false;
 
-  constructor(public cart: CartService, private router: Router) {}
+  private sub?: Subscription;
+
+  constructor(
+    public cart: CartService,
+    private router: Router,
+    private session: SessionService
+  ) {
+    // ✅ immer aktuellen Status holen
+    this.sub = this.session.state$.subscribe(s => {
+      this.authenticated = s.authenticated;
+      this.username = s.username;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
 
   onSearchInput(): void {
     const term = (this.searchTerm || '').trim().toLowerCase();
@@ -64,7 +82,7 @@ export class MenuComponent {
     const hit = PRODUCTS.find(p => (p.name || '').toLowerCase().includes(term));
 
     if (hit) this.router.navigate(['/product', hit.id]);
-    else this.router.navigate(['/mdemos']);
+    else this.router.navigate(['/products']);
 
     this.showSuggestions = false;
   }
@@ -74,7 +92,8 @@ export class MenuComponent {
   }
 
   logout(): void {
-    this.authenticated = false;
+    // ✅ Session leeren
+    this.session.logout();
     this.router.navigate(['/login']);
   }
 }

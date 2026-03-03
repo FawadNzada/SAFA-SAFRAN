@@ -5,7 +5,8 @@
     <p>100% Reiner Safran</p>
 
     <!-- CTA -->
-    <a class="cta" routerLink="/mdemos">Jetzt entdecken</a>
+    <!-- Änderung: /mdemos → /products -->
+    <a class="cta" routerLink="/products">Jetzt entdecken</a>
   </div>
 </section>
 
@@ -19,8 +20,11 @@
       <h3>{{ p.name }}</h3>
       <p class="price">{{ p.price }} €</p>
 
-      <button (click)="cart.add(p)">In den Warenkorb</button>
+      <button (click)="cart.add({ id: p.id, type: 'product', name: p.name, price: p.price, image: p.image, weight: p.weight })">
+        In den Warenkorb
+      </button>
 
+      <!-- bleibt gleich -->
       <a [routerLink]="['/product', p.id]">Mehr erfahren</a>
     </div>
   </div>
@@ -36,8 +40,11 @@
       <h3>{{ b.name }}</h3>
       <p class="price">{{ b.price }} €</p>
 
-      <button (click)="cart.add(b)">In den Warenkorb</button>
+      <button (click)="cart.add({ id: b.id, type: 'bundle', name: b.name, price: b.price, image: b.image, weight: b.weight })">
+        In den Warenkorb
+      </button>
 
+      <!-- bleibt gleich -->
       <a [routerLink]="['/product', b.id]">Mehr erfahren</a>
     </div>
   </div>

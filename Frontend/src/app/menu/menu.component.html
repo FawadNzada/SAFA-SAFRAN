@@ -9,7 +9,7 @@
   <nav class="nav">
 
     <!-- Produkte -->
-    <a routerLink="/mdemos">Produkte</a>
+    <a routerLink="/products">Produkte</a>
 
     <div class="search-wrapper">
       <div class="search">
@@ -41,13 +41,9 @@
     </a>
 
     <!-- ✅ Willkommen + Animation -->
-    <span
-      class="welcome"
-      *ngIf="authenticated"
-      [class.welcome-anim]="welcomeAnim"
-    >
-      Willkommen {{ username }}
-    </span>
+    <span class="welcome" *ngIf="authenticated">
+        Willkommen {{ username }}
+  </span>
 
     <a class="account-link" routerLink="/account" *ngIf="authenticated">
       Konto

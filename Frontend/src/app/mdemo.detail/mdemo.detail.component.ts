@@ -165,7 +165,7 @@ export class MdDemoDetailComponent implements OnInit {
     const image = String(this.product.image ?? '');
     const weight = this.product.weight ? String(this.product.weight) : undefined;
 
-    this.cart.add({ id, name, price, image, weight }, this.qty);
+    this.cart.add({ id, type: 'product', name, price, image, weight }, this.qty);
   }
 
   // -----------------------------
