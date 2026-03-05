@@ -1,0 +1,23 @@
+# Projektmeeting intern
+
+**Teilnehmer:**  
+- Fawad  
+- Sebi  
+- Emily  
+
+## Aktuelle Situation
+- Die Website wurde auf allen Laptops mit `git fetch` aktualisiert, damit jeder den neuesten Stand des Projekts hat.
+
+## Besprochene nächste Schritte
+- Verbesserung des **Headers**:
+  - Position der Suche anpassen
+  - Schriftart (Font) überarbeiten
+  - Entscheidung treffen, ob **„Willkommen (User)“** entfernt oder beibehalten wird
+
+## Issue
+- Gemeinsam versucht, ein Problem von **Emily** zu beheben.
+- Ziel:  
+  - Den **Products-Datenbankpfad über die API** im **Frontend aktualisieren**.
+
+## Nächster Schritt
+- Sprint Besprechung der weiteren Schritte unseres Projekts mit Prof. Klewein
