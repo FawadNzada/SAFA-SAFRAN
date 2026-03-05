@@ -1,75 +1,103 @@
 // app.routes.ts
 
-import { Routes } from '@angular/router';                      // Angular-Routen-Typ
+import { Routes } from '@angular/router';
 
 // --- Komponenten (bestehende) ---
-import { MDemosComponent } from './mdemos/mdemos.component';    // Liste deiner "Produkte" (MDemos)
-import { MdDemoDetailComponent } from './mdemo.detail/mdemo.detail.component'; // Detailseite für ein Produkt
-import { MDemoAddComponent } from './mdemo.add/mdemo.add.component';           // Produkt hinzufügen
-import { MDemoUpdateComponent } from './mdemo.update/mdemo.update.component';  // Produkt bearbeiten
-import { HomeComponent } from './home/home.component';          // Startseite
-import { AdminComponent } from './admin/admin.component';       // Admin-Seite
-import { ForbiddenComponent } from './forbidden/forbidden.component'; // Kein Zugriff
-import { UserProfileComponent } from './user-profile/user-profile.component';  // Profilseite
-import { SafranInfoComponent } from './safran-info/safran-info'; // Safran Info
-import { LoginComponent } from './login/login.component';       // Login
-import { RegisterComponent } from './register/register.component'; // Registrierung
-import { CartComponent } from './cart/cart.component';          // Warenkorb
-import { CheckoutComponent } from './checkout/checkout.component'; // Checkout Start
-import { CheckoutAddressComponent } from './checkout/address.component'; // Checkout Adresse
-import { CheckoutPaymentComponent } from './checkout/payment.component'; // Checkout Zahlung
-import { CheckoutReviewComponent } from './checkout/review.component';   // Checkout Review
-import { AccountComponent } from './account/account.component'; // Account
+import { MDemosComponent } from './mdemos/mdemos.component';
+import { MdDemoDetailComponent } from './mdemo.detail/mdemo.detail.component';
+import { MDemoAddComponent } from './mdemo.add/mdemo.add.component';
+import { MDemoUpdateComponent } from './mdemo.update/mdemo.update.component';
+import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './admin/admin.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SafranInfoComponent } from './safran-info/safran-info';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { CheckoutAddressComponent } from './checkout/address.component';
+import { CheckoutPaymentComponent } from './checkout/payment.component';
+import { CheckoutReviewComponent } from './checkout/review.component';
+import { AccountComponent } from './account/account.component';
 
 // --- Guards (bestehende) ---
-import { authGuard } from './auth/auth.guard';                  // schützt z.B. /checkout
-import { checkoutStepGuard } from './auth/checkout-step.guard'; // schützt Checkout-Schritte
-import { canActivateAuthRole } from './auth/auth-role.guard';   // Rollen-/Rechte-Guard
+import { authGuard } from './auth/auth.guard';
+import { checkoutStepGuard } from './auth/checkout-step.guard';
+import { canActivateAuthRole } from './auth/auth-role.guard';
 
 // --- NEU: Produkt-Seite + Tabs (Produkte | Bundles) ---
-import { ProductsPageComponent } from './products/products-page.component'; // Seite mit 2 Buttons
-import { ProductListComponent } from './products/product-list.component';   // normale Produkte
-import { BundleListComponent } from './products/bundle-list.component';     // bundles
-import { BundleDetailComponent } from './details/bundle-detail.component';;
+import { ProductsPageComponent } from './products/products-page.component';
+import { ProductListComponent } from './products/product-list.component';
+import { BundleListComponent } from './products/bundle-list.component';
+import { BundleDetailComponent } from './details/bundle-detail.component';
+
+// --- NEU: Account-Unterseiten (für Kacheln) ---
+import { OrdersComponent } from './pages/orders.component';
+import { ReturnsComponent } from './pages/returns.component';
+import { SecurityComponent } from './pages/security.component';
+import { AddressesComponent } from './pages/addresses.component';
+import { FavoritesComponent } from './pages/favorites.component';
+import { PaymentsComponent } from './pages/payments.component';
+import { VouchersComponent } from './pages/vouchers.component';
+import { SupportComponent } from './pages/support.component';
+import { MessagesComponent } from './pages/messages.component';
+import { OrderDetailComponent } from './pages/order-detail.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },         // wenn URL leer -> /home
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 
-  { path: 'home', component: HomeComponent },                   // /home -> HomeComponent
+  { path: 'home', component: HomeComponent },
 
-  // ✅ NEU: Produkt-Seite mit 2 Buttons (Produkte | Bundles)
+  // ✅ Produkt-Seite mit 2 Buttons (Produkte | Bundles)
   {
-    path: 'products',                                           // /products
-    component: ProductsPageComponent,                           // Tabs-Seite
+    path: 'products',
+    component: ProductsPageComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'items' },     // /products -> /products/items
-      { path: 'items', component: ProductListComponent },       // /products/items -> normale Produkte
-      { path: 'bundles', component: BundleListComponent },      // /products/bundles -> bundles
+      { path: '', pathMatch: 'full', redirectTo: 'items' },
+      { path: 'items', component: ProductListComponent },
+      { path: 'bundles', component: BundleListComponent },
     ]
   },
 
-  // Produkte (Alias) - deine bestehende Route bleibt wie sie ist
-  { path: 'produkte', component: MDemosComponent, canActivate: [canActivateAuthRole], data: { role: 'myUserRole' } }, // /produkte
-  { path: 'product/:id', component: MdDemoDetailComponent },     // /product/123 -> Detailseite
+  // Produkte (Alias)
+  { path: 'produkte', component: MDemosComponent, canActivate: [canActivateAuthRole], data: { role: 'myUserRole' } },
+  { path: 'product/:id', component: MdDemoDetailComponent },
 
   // bestehende Routes
-  { path: 'mdemos', component: MDemosComponent },               // /mdemos
-  { path: 'mdemo-add', component: MDemoAddComponent },          // /mdemo-add
-  { path: 'mdemo-detail/:id', component: MdDemoDetailComponent, canActivate: [canActivateAuthRole], data: { role: 'myUserRole' } }, // /mdemo-detail/123
-  { path: 'mdemo-update/:id', component: MDemoUpdateComponent }, // /mdemo-update/123
-  { path: 'admin', component: AdminComponent, canActivate: [canActivateAuthRole], data: { role: 'myAdminRole' } },    // /admin
-  { path: 'profile', component: UserProfileComponent, canActivate: [canActivateAuthRole], data: { role: 'view-profile' } }, // /profile
-  { path: 'safran', component: SafranInfoComponent },           // /safran
-  { path: 'forbidden', component: ForbiddenComponent },         // /forbidden
-  { path: 'login', component: LoginComponent },                 // /login
-  { path: 'register', component: RegisterComponent },           // /register
-  { path: 'cart', component: CartComponent },                   // /cart
-  { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] }, // /checkout
-  { path: 'checkout/address', component: CheckoutAddressComponent, canActivate: [checkoutStepGuard] }, // /checkout/address
-  { path: 'checkout/payment', component: CheckoutPaymentComponent, canActivate: [checkoutStepGuard] }, // /checkout/payment
-  { path: 'checkout/review', component: CheckoutReviewComponent, canActivate: [checkoutStepGuard] },   // /checkout/review
-  { path: 'account', component: AccountComponent },             // /account
+  { path: 'mdemos', component: MDemosComponent },
+  { path: 'mdemo-add', component: MDemoAddComponent },
+  { path: 'mdemo-detail/:id', component: MdDemoDetailComponent, canActivate: [canActivateAuthRole], data: { role: 'myUserRole' } },
+  { path: 'mdemo-update/:id', component: MDemoUpdateComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [canActivateAuthRole], data: { role: 'myAdminRole' } },
+  { path: 'profile', component: UserProfileComponent, canActivate: [canActivateAuthRole], data: { role: 'view-profile' } },
+  { path: 'safran', component: SafranInfoComponent },
+  { path: 'forbidden', component: ForbiddenComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'cart', component: CartComponent },
+
+  { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
+  { path: 'checkout/address', component: CheckoutAddressComponent, canActivate: [checkoutStepGuard] },
+  { path: 'checkout/payment', component: CheckoutPaymentComponent, canActivate: [checkoutStepGuard] },
+  { path: 'checkout/review', component: CheckoutReviewComponent, canActivate: [checkoutStepGuard] },
+
+  { path: 'account', component: AccountComponent },
+
+  // ✅ Bundle Detail
   { path: 'bundle/:id', component: BundleDetailComponent },
 
-  { path: '**', redirectTo: '/home' },                          // alles unbekannte -> /home
+  // ✅ NEU: Routes für Account-Kacheln
+  { path: 'orders', component: OrdersComponent },
+  { path: 'orders/:id', component: OrderDetailComponent },
+  { path: 'returns', component: ReturnsComponent },
+  { path: 'security', component: SecurityComponent },
+  { path: 'addresses', component: AddressesComponent },
+  { path: 'favorites', component: FavoritesComponent },
+  { path: 'payments', component: PaymentsComponent },
+  { path: 'vouchers', component: VouchersComponent },
+  { path: 'support', component: SupportComponent },
+  { path: 'messages', component: MessagesComponent },
+
+  { path: '**', redirectTo: '/home' },
 ];

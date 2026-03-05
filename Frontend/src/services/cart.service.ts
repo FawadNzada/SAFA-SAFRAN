@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { CartItem, CartItemType } from '../models/cart-item.model';
 
+import { Product } from '../models/product.model';
+import { Bundle } from '../models/bundle.model';
+
 @Injectable({ providedIn: 'root' })
 export class CartService {
 
@@ -64,6 +67,36 @@ export class CartService {
 
     this.save(items);
     this.emitAdded();
+  }
+
+  // ✅ Komfort: direkt Product hinzufügen
+  addProduct(p: Product, qty = 1) {
+    this.add(
+      {
+        id: p.id,
+        type: 'product',
+        name: p.name,
+        price: p.price,
+        image: p.image,
+        weight: p.weight,
+      },
+      qty
+    );
+  }
+
+  // ✅ Komfort: direkt Bundle hinzufügen
+  addBundle(b: Bundle, qty = 1) {
+    this.add(
+      {
+        id: b.id,
+        type: 'bundle',
+        name: b.name,
+        price: b.price,
+        image: b.image,
+        weight: b.weight,
+      },
+      qty
+    );
   }
 
   increase(id: number, type: CartItemType = 'product') {

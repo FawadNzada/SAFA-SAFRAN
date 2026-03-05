@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-type SessionState = {
+export type SessionState = {
   authenticated: boolean;
   username: string;
 };
@@ -40,8 +40,16 @@ export class SessionService {
     this.save({ authenticated: false, username: '' });
   }
 
-  // optional: falls du woanders nur lesen willst
   get snapshot(): SessionState {
     return this.stateSubject.value;
+  }
+
+  // Für Templates praktisch:
+  get isAuthenticated(): boolean {
+    return this.stateSubject.value.authenticated;
+  }
+
+  get username(): string {
+    return this.stateSubject.value.username;
   }
 }

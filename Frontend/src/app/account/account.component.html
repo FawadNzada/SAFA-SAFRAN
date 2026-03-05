@@ -1,24 +1,26 @@
 <div class="account-page">
   <h1>Mein Konto</h1>
 
-  <div class="grid">
-    <a
-      class="tile"
-      *ngFor="let t of tiles"
-      [routerLink]="t.link"
-    >
-      <div class="icon">
-        {{ t.icon }}
-      </div>
+  <p class="welcome" *ngIf="isAuthenticated">
+    Willkommen <span class="name">{{ username }}</span>
+  </p>
 
-      <div class="text">
-        <div class="title">
-          {{ t.title }}
+  <p class="welcome" *ngIf="!isAuthenticated">
+    Du bist nicht eingeloggt.
+  </p>
+
+  <div class="section" *ngFor="let c of categories">
+    <h2>{{ c }}</h2>
+
+    <div class="grid">
+      <a class="tile" *ngFor="let t of getTilesByCategory(c)" [routerLink]="t.link">
+        <div class="icon">{{ t.icon }}</div>
+
+        <div class="text">
+          <div class="title">{{ t.title }}</div>
+          <div class="desc">{{ t.desc }}</div>
         </div>
-        <div class="desc">
-          {{ t.desc }}
-        </div>
-      </div>
-    </a>
+      </a>
+    </div>
   </div>
 </div>

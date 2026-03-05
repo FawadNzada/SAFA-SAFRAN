@@ -1,0 +1,36 @@
+<div class="page">
+  <div class="top">
+    <div>
+      <h1>Anmelden & Sicherheit</h1>
+      <div class="sub">Name, E-Mail und Passwort verwalten</div>
+    </div>
+
+    <a class="link" routerLink="/account">← Mein Konto</a>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div class="k">Login-Status</div>
+      <div class="v">
+        <span class="pill" [class.ok]="session.authenticated">
+          {{ session.authenticated ? 'Eingeloggt' : 'Nicht eingeloggt' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="k">Username</div>
+      <div class="v">
+        <input class="input" type="text" [(ngModel)]="newUsername" placeholder="z.B. user">
+        <button class="primary" type="button" (click)="saveUsername()">Speichern</button>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="session.authenticated">
+      <div class="k">Abmelden</div>
+      <div class="v">
+        <button class="ghost" type="button" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
