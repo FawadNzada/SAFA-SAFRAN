@@ -1,53 +1,52 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { CartService } from '../../services/cart.service';
-import { AuthService } from '../auth/auth.service';
-import { DataService } from '../../services/data.service';
-import { MDemoOverview } from '../../models/mdemo.model';
+import { SessionService } from '../../services/session.service';
+import { PRODUCTS } from '../data/products';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnDestroy {
+  authenticated = false;
+  username = '';
+  welcomeAnim = false;
 
-  cart = inject(CartService);
-  auth = inject(AuthService);
-  dataService = inject(DataService);
-  router = inject(Router);
-
-  searchTerm: string = '';
-
-  allProducts: MDemoOverview[] = [];
-  suggestions: MDemoOverview[] = [];
+  searchTerm = '';
+  suggestions: Product[] = [];
   showSuggestions = false;
 
-  get authenticated(): boolean {
-    return this.auth.isLoggedIn();
-  }
+  bump = false;
 
-  get username(): string {
-    return this.auth.getUsername();
-  }
+  private sub?: Subscription;
 
-  ngOnInit(): void {
-    this.dataService.getMDemos().subscribe({
-      next: (data: MDemoOverview[]) => {
-        this.allProducts = data ?? [];
-        console.log("Loaded products:", this.allProducts);
-      },
-      error: (err: unknown) => console.error("Product load error:", err)
+  constructor(
+    public cart: CartService,
+    private router: Router,
+    private session: SessionService
+  ) {
+    // ✅ immer aktuellen Status holen
+    this.sub = this.session.state$.subscribe(s => {
+      this.authenticated = s.authenticated;
+      this.username = s.username;
     });
   }
 
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
   onSearchInput(): void {
-    const term = this.searchTerm.toLowerCase().trim();
+    const term = (this.searchTerm || '').trim().toLowerCase();
 
     if (!term) {
       this.suggestions = [];
@@ -55,56 +54,46 @@ export class MenuComponent implements OnInit {
       return;
     }
 
-    this.suggestions = this.allProducts
-      .filter(p => {
-        const text = Object.values(p)
-          .filter(v => v !== null && v !== undefined)
-          .map(v => String(v).toLowerCase())
-          .join(' ');
-        return text.includes(term);
-      })
+    this.suggestions = PRODUCTS
+      .filter(p => (p.name || '').toLowerCase().includes(term))
       .slice(0, 6);
 
     this.showSuggestions = this.suggestions.length > 0;
   }
 
-  search(): void {
-    const term = this.searchTerm.trim();
-    if (!term) return;
-
-    this.showSuggestions = false;
-
-    this.router.navigate(['/mdemos'], {
-      queryParams: { search: term }
-    });
-  }
-
-  openSuggestion(p: MDemoOverview): void {
-    this.showSuggestions = false;
-    this.searchTerm = p.name ?? '';
-    this.router.navigate(['/mdemo-detail', p.id]);
+  onFocus(): void {
+    if (this.suggestions.length > 0) this.showSuggestions = true;
   }
 
   onBlur(): void {
-    setTimeout(() => this.showSuggestions = false, 150);
+    setTimeout(() => (this.showSuggestions = false), 120);
   }
 
-  onFocus(): void {
-    if (this.suggestions.length > 0) {
-      this.showSuggestions = true;
-    }
+  openSuggestion(p: Product): void {
+    this.searchTerm = p.name;
+    this.showSuggestions = false;
+    this.router.navigate(['/product', p.id]);
   }
 
-  goLogin() {
+  search(): void {
+    const term = (this.searchTerm || '').trim().toLowerCase();
+    if (!term) return;
+
+    const hit = PRODUCTS.find(p => (p.name || '').toLowerCase().includes(term));
+
+    if (hit) this.router.navigate(['/product', hit.id]);
+    else this.router.navigate(['/products']);
+
+    this.showSuggestions = false;
+  }
+
+  goLogin(): void {
     this.router.navigate(['/login']);
   }
 
-  logout() {
-    this.auth.logout();
-    this.router.navigate(['/home']);
+  logout(): void {
+    // ✅ Session leeren
+    this.session.logout();
+    this.router.navigate(['/login']);
   }
-
-  goRegister() {
-  this.router.navigate(['/register']);
-}
 }

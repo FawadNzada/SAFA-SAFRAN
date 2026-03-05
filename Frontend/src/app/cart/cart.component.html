@@ -17,16 +17,26 @@
       <div class="mid">
         <div class="name">{{ it.name }}</div>
 
+        <!-- Optional: Typ anzeigen (Produkt/Bundle) -->
+        <div class="meta">
+          Typ: <b>{{ it.type === 'bundle' ? 'Bundle' : 'Produkt' }}</b>
+        </div>
+
         <div class="meta" *ngIf="it.weight">Gewicht: {{ it.weight }}</div>
 
         <div class="stock">Auf Lager</div>
 
         <div class="actions">
-          <button class="qtyBtn" (click)="dec(it.id)">−</button>
-          <div class="qty">{{ it.qty }}</div>
-          <button class="qtyBtn" (click)="inc(it.id)">+</button>
+          <!-- ✅ FIX: type mitgeben -->
+          <button class="qtyBtn" (click)="dec(it.id, it.type)">−</button>
 
-          <button class="link" (click)="remove(it.id)">Entfernen</button>
+          <div class="qty">{{ it.qty }}</div>
+
+          <!-- ✅ FIX: type mitgeben -->
+          <button class="qtyBtn" (click)="inc(it.id, it.type)">+</button>
+
+          <!-- ✅ FIX: type mitgeben -->
+          <button class="link" (click)="remove(it.id, it.type)">Entfernen</button>
         </div>
       </div>
 
@@ -54,7 +64,7 @@
 
       <div class="small">Versand: Kostenlos</div>
 
-      <button class="checkout">Zur Kasse</button>
+      <button class="checkout" (click)="checkout()"> Zur Kasse</button>
     </div>
   </div>
 

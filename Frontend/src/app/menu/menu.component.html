@@ -1,16 +1,17 @@
 <header class="header">
 
-  <div class="logo">
-    <img src="assets/LOGO.png" alt="SAFA Logo">
-  </div>
+  <a class="logo-link" routerLink="/home">
+    <div class="logo">
+      <img src="assets/LOGO.png" alt="SAFA Logo" />
+    </div>
+  </a>
 
   <nav class="nav">
 
-    <a routerLink="/home">Startseite</a>
-    <a routerLink="/mdemos">Produkte</a>
+    <!-- Produkte -->
+    <a routerLink="/products">Produkte</a>
 
     <div class="search-wrapper">
-
       <div class="search">
         <input
           type="text"
@@ -33,12 +34,21 @@
           {{ p.name || ('Produkt #' + p.id) }}
         </div>
       </div>
-
     </div>
 
-    <a routerLink="/cart">Warenkorb ({{ cart.count() }})</a>
+    <a routerLink="/cart" class="cart-link" [class.bump]="bump">
+      Warenkorb <span class="badge">({{ cart.count() }})</span>
+    </a>
 
-    <span *ngIf="authenticated">{{ username }}</span>
+    <!-- ✅ Willkommen + Animation -->
+    <span class="welcome" *ngIf="authenticated">
+        Willkommen {{ username }}
+  </span>
+
+    <a class="account-link" routerLink="/account" *ngIf="authenticated">
+      Konto
+    </a>
+
     <button *ngIf="!authenticated" (click)="goLogin()">Login</button>
     <button *ngIf="authenticated" (click)="logout()">Logout</button>
 

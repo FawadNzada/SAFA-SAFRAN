@@ -1,0 +1,47 @@
+<div class="page">
+  <div class="top">
+    <div>
+      <h1>Favoriten</h1>
+      <div class="sub">Gespeicherte Produkte ansehen</div>
+    </div>
+
+    <div class="actions">
+      <a class="link" routerLink="/account">← Mein Konto</a>
+      <button class="ghost" type="button" (click)="clearAll()" *ngIf="favorites.length > 0">Alle löschen</button>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="favorites.length === 0">
+    <div class="card">
+      <div class="title">Noch keine Favoriten</div>
+      <div class="text">Sobald du Produkte speicherst, erscheinen sie hier.</div>
+
+      <div class="row">
+        <a class="primary" routerLink="/products">Weiter einkaufen</a>
+        <button class="ghost" type="button" (click)="createDemo()">Demo hinzufügen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="favorites.length > 0">
+    <div class="item" *ngFor="let f of favorites">
+      <div class="thumb">
+        <img [src]="f.image" [alt]="f.name" (error)="onImgError($event)">
+      </div>
+
+      <div class="info">
+        <div class="name">{{ f.name }}</div>
+        <div class="meta">
+          <span class="type">{{ f.type === 'bundle' ? 'Bundle' : 'Produkt' }}</span>
+          <span class="dot" *ngIf="f.weight">•</span>
+          <span *ngIf="f.weight">{{ f.weight }}</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="price">€ {{ f.price | number:'1.2-2' }}</div>
+        <button class="ghost" type="button" (click)="remove(f.id, f.type)">Entfernen</button>
+      </div>
+    </div>
+  </div>
+</div>

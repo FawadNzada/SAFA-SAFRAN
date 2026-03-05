@@ -1,0 +1,35 @@
+<div class="page">
+  <div class="top">
+    <div>
+      <h1>Support</h1>
+      <div class="sub">Hilfe & Kontakt</div>
+    </div>
+
+    <a class="link" routerLink="/account">← Mein Konto</a>
+  </div>
+
+  <div class="card">
+    <div class="hint" *ngIf="sent">✅ Nachricht gespeichert (Demo)</div>
+
+    <label class="field">
+      <span>Name</span>
+      <input class="input" type="text" [(ngModel)]="name" placeholder="z.B. Sebastian">
+    </label>
+
+    <label class="field">
+      <span>E-Mail</span>
+      <input class="input" type="email" [(ngModel)]="email" placeholder="z.B. name@mail.com">
+    </label>
+
+    <label class="field">
+      <span>Nachricht</span>
+      <textarea class="input" rows="5" [(ngModel)]="message" placeholder="Wie können wir helfen?"></textarea>
+    </label>
+
+    <button class="primary" type="button" (click)="submit()">Senden</button>
+
+    <div class="small">
+      Hinweis: Demo – wird lokal im Browser gespeichert (localStorage).
+    </div>
+  </div>
+</div>

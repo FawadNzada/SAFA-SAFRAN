@@ -1,0 +1,284 @@
+.orders-page{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  color: #f3f3f3;
+  font-family: 'Poppins', sans-serif;
+}
+
+.topBar{
+  display:flex;
+  align-items:flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.topBar h1{
+  margin: 0;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.sub{
+  margin-top: 6px;
+  opacity: .75;
+  font-size: 13px;
+}
+
+.right{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.back{
+  text-decoration:none;
+  color: rgba(255,255,255,.8);
+  font-weight: 700;
+}
+
+.ghost{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(212,175,55,0.18);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.primary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(212,175,55,0.25);
+  background: rgba(212,175,55,0.12);
+  color:#fff;
+  text-decoration:none;
+  font-weight: 900;
+}
+
+.list{
+  display:grid;
+  gap: 14px;
+}
+
+.orderCard{
+  border-radius: 16px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+.orderHead{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1.4fr;
+  gap: 12px;
+  padding: 14px;
+  background: rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.hLabel{
+  font-size: 11px;
+  opacity: .75;
+  margin-bottom: 4px;
+}
+
+.hValue{
+  font-weight: 900;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,0.22);
+  background: rgba(212,175,55,0.10);
+  font-weight: 900;
+  font-size: 12px;
+  width: fit-content;
+}
+
+.hRight{
+  text-align:right;
+}
+
+.orderId{
+  font-size: 13px;
+  opacity: .9;
+}
+
+.itemsCount{
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: .75;
+}
+
+.orderBody{
+  padding: 14px;
+}
+
+.note{
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  font-size: 12px;
+  opacity: .9;
+}
+
+.items{
+  display:grid;
+  gap: 10px;
+}
+
+.itemRow{
+  display:grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 12px;
+  align-items:center;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+
+.thumb{
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow:hidden;
+  border: 1px solid rgba(212,175,55,0.12);
+  background: rgba(0,0,0,0.25);
+}
+
+.thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+}
+
+.name{
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.meta{
+  font-size: 12px;
+  opacity: .78;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items:center;
+}
+
+.type{
+  font-weight: 900;
+  color: #d4af37;
+}
+
+.dot{
+  opacity: .55;
+}
+
+.price{
+  font-weight: 900;
+  color: #d4af37;
+  white-space: nowrap;
+}
+
+.sum{
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  max-width: 340px;
+  margin-left: auto;
+}
+
+.sumRow{
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  opacity: .9;
+  margin: 8px 0;
+}
+
+.divider{
+  height: 1px;
+  background: rgba(255,255,255,0.10);
+  margin: 10px 0;
+}
+
+.sumTotal{
+  display:flex;
+  justify-content: space-between;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.empty{
+  margin-top: 14px;
+}
+
+.emptyCard{
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.emptyTitle{
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.emptyText{
+  margin-top: 6px;
+  opacity: .8;
+}
+
+.emptyActions{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+@media (max-width: 820px){
+  .orderHead{
+    grid-template-columns: 1fr 1fr;
+  }
+  .hRight{
+    grid-column: 1 / -1;
+    text-align:left;
+  }
+  .sum{
+    max-width: none;
+    margin-left: 0;
+  }
+}
+
+.orderCardLink{
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.orderCardLink:hover .orderCard{
+  transform: translateY(-2px);
+}
+.orderCard{
+  transition: 0.2s ease;
+}

@@ -1,0 +1,135 @@
+<div class="orders-page">
+
+  <div class="topBar">
+    <div class="left">
+      <h1>Meine Bestellungen</h1>
+      <div class="sub">Alle Bestellungen im Überblick</div>
+    </div>
+
+    <div class="right">
+      <a class="back" routerLink="/account">← Mein Konto</a>
+
+      <button
+        class="ghost"
+        type="button"
+        (click)="clearAll()"
+        *ngIf="orders.length > 0"
+      >
+        Alle löschen
+      </button>
+    </div>
+  </div>
+
+  <!-- KEINE BESTELLUNGEN -->
+  <div *ngIf="orders.length === 0" class="empty">
+    <p>Du hast noch keine Bestellungen.</p>
+
+    <div class="row">
+      <a routerLink="/products">Weiter einkaufen</a>
+      <span class="sep">•</span>
+
+      <button type="button" (click)="createDemo()">
+        Demo-Bestellung erstellen
+      </button>
+    </div>
+  </div>
+
+  <!-- BESTELLUNGEN -->
+  <div class="list" *ngIf="orders.length > 0">
+
+    <div
+      class="orderCard"
+      *ngFor="let o of orders"
+      [routerLink]="['/orders', o.id]"
+    >
+
+      <div class="orderHead">
+
+        <div class="hBlock">
+          <div class="hLabel">Bestellt am</div>
+          <div class="hValue">{{ fmtDate(o.createdAtIso) }}</div>
+        </div>
+
+        <div class="hBlock">
+          <div class="hLabel">Gesamt</div>
+          <div class="hValue">€ {{ o.total | number:'1.2-2' }}</div>
+        </div>
+
+        <div class="hBlock">
+          <div class="hLabel">Status</div>
+          <div class="pill">{{ statusLabel(o.status) }}</div>
+        </div>
+
+        <div class="hRight">
+          <div class="orderId">
+            Bestellung: <b>{{ o.id }}</b>
+          </div>
+
+          <div class="itemsCount">
+            {{ itemLabel(o) }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="orderBody">
+
+        <div class="note" *ngIf="o.note">
+          Hinweis: {{ o.note }}
+        </div>
+
+        <div class="items">
+
+          <div
+            class="itemRow"
+            *ngFor="let it of o.items"
+          >
+
+            <div class="thumb">
+              <img
+                [src]="it.image || 'assets/LOGO.png'"
+                [alt]="it.name"
+              >
+            </div>
+
+            <div class="info">
+
+              <div class="name">
+                {{ it.name }}
+              </div>
+
+              <div class="meta">
+                <span class="type">
+                  {{ it.type === 'bundle' ? 'Bundle' : 'Produkt' }}
+                </span>
+
+                <span class="dot">•</span>
+
+                <span class="qty">
+                  Menge: <b>{{ it.qty }}</b>
+                </span>
+
+                <span class="dot" *ngIf="it.weight">•</span>
+
+                <span class="weight" *ngIf="it.weight">
+                  {{ it.weight }}
+                </span>
+              </div>
+
+            </div>
+
+            <div class="price">
+              € {{ (it.price * it.qty) | number:'1.2-2' }}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,98 @@
+<div class="page" *ngIf="order; else notFound">
+
+  <div class="topBar">
+    <a class="back" routerLink="/orders">← Bestellungen</a>
+    <a class="back" routerLink="/account">Mein Konto</a>
+  </div>
+
+  <div class="hero">
+    <div class="left">
+      <h1>Bestellung</h1>
+      <div class="id">{{ order.id }}</div>
+
+      <div class="meta">
+        <div class="metaItem">
+          <div class="label">Bestellt am</div>
+          <div class="value">{{ fmtDate(order.createdAtIso) }}</div>
+        </div>
+
+        <div class="metaItem">
+          <div class="label">Artikel</div>
+          <div class="value">{{ itemCount(order) }}</div>
+        </div>
+
+        <div class="metaItem">
+          <div class="label">Status</div>
+          <div class="pill" [ngClass]="statusClass(order.status)">
+            {{ statusLabel(order.status) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="sumBox">
+        <div class="row">
+          <span>Zwischensumme</span>
+          <b>€ {{ order.subtotal | number:'1.2-2' }}</b>
+        </div>
+        <div class="row">
+          <span>Versand</span>
+          <b>{{ order.shipping === 0 ? 'Kostenlos' : ('€ ' + (order.shipping | number:'1.2-2')) }}</b>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="total">
+          <span>Gesamt</span>
+          <b>€ {{ order.total | number:'1.2-2' }}</b>
+        </div>
+
+        <div class="note" *ngIf="order.note">
+          Hinweis: {{ order.note }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="cardTitle">Artikel in dieser Bestellung</div>
+
+    <div class="items">
+      <div class="itemRow" *ngFor="let it of order.items">
+
+        <div class="thumb">
+          <img
+            [src]="it.image || 'assets/LOGO.png'"
+            [alt]="it.name"
+            (error)="onImgError($event)"
+          />
+        </div>
+
+        <div class="info">
+          <div class="name">{{ it.name }}</div>
+          <div class="sub">
+            <span class="type">{{ it.type === 'bundle' ? 'Bundle' : 'Produkt' }}</span>
+            <span class="dot">•</span>
+            <span>Menge: <b>{{ it.qty }}</b></span>
+            <span class="dot" *ngIf="it.weight">•</span>
+            <span *ngIf="it.weight">{{ it.weight }}</span>
+          </div>
+        </div>
+
+        <div class="price">
+          € {{ (it.price * it.qty) | number:'1.2-2' }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #notFound>
+  <div class="notFound">
+    <h1>Bestellung nicht gefunden</h1>
+    <a routerLink="/orders">← Zurück zu Bestellungen</a>
+  </div>
+</ng-template>

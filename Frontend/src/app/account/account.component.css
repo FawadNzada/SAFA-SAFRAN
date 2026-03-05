@@ -1,0 +1,149 @@
+/* Page */
+.account-page{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 16px;
+  color: #f3f3f3;
+  font-family: 'Poppins', sans-serif;
+}
+
+.account-page h1{
+  margin: 0 0 18px 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+}
+
+/* Sections (Kategorie-Blöcke) */
+.section{
+  margin-top: 22px;
+}
+
+.section h2{
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.92);
+  letter-spacing: 0.25px;
+}
+
+/* Grid */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Tile Card */
+.tile{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 16px 16px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.tile:hover{
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(212, 175, 55, 0.38);
+  box-shadow: 0 16px 34px rgba(0,0,0,0.45);
+}
+
+/* Icon Box */
+.icon{
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 22px;
+  line-height: 1;
+
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.24);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+}
+
+/* Text */
+.text{
+  min-width: 0; /* wichtig für sauberes Wrapping */
+}
+
+.text .title{
+  color: #d4af37;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.2;
+  margin: 0 0 4px 0;
+}
+
+.text .desc{
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 12.5px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Optional: schöner Fokus für Tastatur (Accessibility) */
+.tile:focus{
+  outline: none;
+}
+.tile:focus-visible{
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15), 0 16px 34px rgba(0,0,0,0.45);
+}
+
+/* Responsive */
+@media (max-width: 1100px){
+  .grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px){
+  .account-page{
+    padding: 22px 12px;
+  }
+
+  .account-page h1{
+    font-size: 26px;
+  }
+
+  .grid{
+    grid-template-columns: 1fr;
+  }
+
+  .tile{
+    padding: 15px 14px;
+  }
+
+  .icon{
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+
+  .welcome{
+  margin: -6px 0 14px 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.80);
+  }
+
+  .welcome .name{
+    color: #d4af37;
+    font-weight: 800;
+  }
+  }

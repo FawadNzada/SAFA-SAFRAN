@@ -1,14 +1,11 @@
-<h2>M-Demos</h2>
-
-<div class="container mt-3">
-
-  <h1>Produkte</h1>
+<div class="container">
 
   <div class="grid">
-    <a class="card"
-       *ngFor="let p of filteredMdemos"
-       (click)="showDemo(p)">
-
+    <a
+      class="card"
+      *ngFor="let p of filteredMdemos"
+      (click)="showDemo(p)"
+    >
       <div class="imgWrap">
         <img [src]="p.image || 'assets/LOGO.png'" [alt]="p.name">
       </div>
@@ -24,7 +21,6 @@
           € {{ p.price }}
         </div>
       </div>
-
     </a>
   </div>
 

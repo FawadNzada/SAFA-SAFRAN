@@ -13,9 +13,3 @@ export const PRODUCTS: Product[] = [
   { id: 7, name: 'Deluxe Bundle', price: 64.90, image: 'assets/bundles/deluxe.png', category: 'bundle' },
   { id: 8, name: 'Gourmet Set',   price: 89.90, image: 'assets/bundles/gourmet.png', category: 'bundle' },
 ];
-
-
-
-
-
-
