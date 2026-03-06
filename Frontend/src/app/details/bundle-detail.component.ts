@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import { CartService } from '../../services/cart.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { Bundle } from '../../models/bundle.model';
 
 type Review = {
@@ -56,13 +57,14 @@ export class BundleDetailComponent implements OnInit {
   // ✅ Demo Bundles
   private bundles: Bundle[] = [
     { id: 101, name: 'Deluxe Bundle',  price: 129.99, image: '/assets/bundles/deluxe.png',  weight: 'Bundle' },
-    { id: 102, name: 'Gewürz Bundle',  price:  89.99, image: '/assets/bundles/gewuerz.png', weight: 'Bundle' },
+    { id: 102, name: 'Gewürz Bundle',  price: 89.99, image: '/assets/bundles/gewuerz.png', weight: 'Bundle' },
     { id: 103, name: 'Gourmet Bundle', price: 159.99, image: '/assets/bundles/gourmet.png', weight: 'Bundle' },
   ];
 
   constructor(
     private route: ActivatedRoute,
-    public cart: CartService
+    public cart: CartService,
+    private favorites: FavoritesService
   ) {}
 
   ngOnInit(): void {
@@ -82,13 +84,19 @@ export class BundleDetailComponent implements OnInit {
     const x = Math.max(0, Math.min(5, Math.round(n)));
     return Array.from({ length: x }, (_, i) => i);
   }
+
   starsEmpty(n: number): number[] {
     const x = Math.max(0, Math.min(5, Math.round(n)));
     return Array.from({ length: 5 - x }, (_, i) => i);
   }
 
-  decQty(): void { this.qty = Math.max(1, this.qty - 1); }
-  incQty(): void { this.qty = this.qty + 1; }
+  decQty(): void {
+    this.qty = Math.max(1, this.qty - 1);
+  }
+
+  incQty(): void {
+    this.qty = this.qty + 1;
+  }
 
   setSection(s: 'desc' | 'usage' | 'details' | 'shipping' | 'reviews'): void {
     this.openSection = s;
@@ -133,6 +141,24 @@ export class BundleDetailComponent implements OnInit {
     this.cart.addBundle(this.bundle, this.qty);
   }
 
+  addToFavorites(): void {
+    if (!this.bundle) return;
+
+    this.favorites.addFavorite({
+      id: Number(this.bundle.id),
+      type: 'bundle',
+      name: String(this.bundle.name ?? ''),
+      price: Number(this.bundle.price ?? 0),
+      image: String(this.bundle.image ?? ''),
+      weight: this.bundle.weight ? String(this.bundle.weight) : undefined,
+    });
+  }
+
+  isFavorite(): boolean {
+    if (!this.bundle) return false;
+    return this.favorites.isFavorite(Number(this.bundle.id));
+  }
+
   // Reviews localStorage
   private getKey(): string {
     const bid = this.bundle?.id ?? 'x';
@@ -162,6 +188,7 @@ export class BundleDetailComponent implements OnInit {
     const name = this.reviewName.trim();
     const title = this.reviewTitle.trim();
     const text = this.reviewText.trim();
+
     if (!name || !title || !text) return;
 
     const now = new Date();

@@ -7,7 +7,9 @@
 
     <div class="actions">
       <a class="link" routerLink="/account">← Mein Konto</a>
-      <button class="ghost" type="button" (click)="clearAll()" *ngIf="favorites.length > 0">Alle löschen</button>
+      <button class="ghost" type="button" (click)="clearAll()" *ngIf="favorites.length > 0">
+        Alle löschen
+      </button>
     </div>
   </div>
 
@@ -18,7 +20,6 @@
 
       <div class="row">
         <a class="primary" routerLink="/products">Weiter einkaufen</a>
-        <button class="ghost" type="button" (click)="createDemo()">Demo hinzufügen</button>
       </div>
     </div>
   </div>
@@ -31,6 +32,7 @@
 
       <div class="info">
         <div class="name">{{ f.name }}</div>
+
         <div class="meta">
           <span class="type">{{ f.type === 'bundle' ? 'Bundle' : 'Produkt' }}</span>
           <span class="dot" *ngIf="f.weight">•</span>
@@ -40,7 +42,7 @@
 
       <div class="right">
         <div class="price">€ {{ f.price | number:'1.2-2' }}</div>
-        <button class="ghost" type="button" (click)="remove(f.id, f.type)">Entfernen</button>
+        <button class="ghost" type="button" (click)="remove(f.id)">Entfernen</button>
       </div>
     </div>
   </div>

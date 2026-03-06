@@ -8,9 +8,6 @@
 
   <nav class="nav">
 
-    <!-- Produkte -->
-    <a routerLink="/products">Produkte</a>
-
     <div class="search-wrapper">
       <div class="search">
         <input
@@ -36,14 +33,15 @@
       </div>
     </div>
 
+    <a routerLink="/products">Produkte</a>
+
     <a routerLink="/cart" class="cart-link" [class.bump]="bump">
-      Warenkorb <span class="badge">({{ cart.count() }})</span>
+      Warenkorb <span class="badge">{{ cart.count() }}</span>
     </a>
 
-    <!-- ✅ Willkommen + Animation -->
     <span class="welcome" *ngIf="authenticated">
-        Willkommen {{ username }}
-  </span>
+      Willkommen {{ username }}
+    </span>
 
     <a class="account-link" routerLink="/account" *ngIf="authenticated">
       Konto

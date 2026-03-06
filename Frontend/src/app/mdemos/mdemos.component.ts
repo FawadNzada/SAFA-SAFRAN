@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { MDemoOverview } from '../../models/mdemo.model';
 import { DataService } from '../../services/data.service';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-mdemos',
@@ -20,6 +21,7 @@ export class MDemosComponent implements OnInit {
   private dataService = inject(DataService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private favorites = inject(FavoritesService);
 
   ngOnInit(): void {
     this.dataService.getMDemos().subscribe({
@@ -90,5 +92,15 @@ export class MDemosComponent implements OnInit {
         error: (error: unknown) => console.error('Error deleting mdemo:', error)
       });
     }
+  }
+
+
+  addToFavorites(mdemo: MDemoOverview, event: Event): void {
+    event.stopPropagation();
+    this.favorites.addFavorite(mdemo);
+  }
+
+  isFavorite(mdemoId: number): boolean {
+    return this.favorites.isFavorite(mdemoId);
   }
 }

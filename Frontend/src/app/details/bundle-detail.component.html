@@ -23,6 +23,10 @@
       <div class="info">
         <h1 class="title">{{ bundle.name }}</h1>
 
+        <button class="favoriteDetailBtn" type="button" (click)="addToFavorites()">
+          {{ isFavorite() ? '❤️ Zu Favoriten hinzugefügt' : '🤍 Bundle zu Favoriten' }}
+        </button>
+
         <div class="ratingRow">
           <div class="stars">
             <span class="star on" *ngFor="let _ of stars(avgRating)">★</span>

@@ -213,7 +213,9 @@
 /* ACCOUNT */
 /* ========================= */
 
-.account-link {
+.account-link,
+.nav a[href="/products"],
+.cart-link  {
   color: #d4af37;
   text-decoration: none;
   font-weight: 600;
@@ -223,7 +225,9 @@
   transition: 0.25s ease;
 }
 
-.account-link:hover {
+.account-link:hover,
+.nav a[href="/products"]:hover,
+.cart-link:hover {
   background: #d4af37;
   color: #0f0f0f;
   box-shadow: 0 0 12px rgba(212,175,55,0.45);
@@ -283,4 +287,65 @@
   body {
     padding-top: 150px;
   }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+
+  margin-left: 8px;
+
+  border-radius: 999px;
+  background: rgba(212,175,55,0.18);
+  border: 1px solid rgba(212,175,55,0.35);
+
+  color: #f5d76e;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cart-link.bump .badge {
+  animation: cartBounce 300ms ease;
+}
+
+@keyframes cartBounce {
+
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.4);
+  }
+
+  70% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+.cart-link.bump {
+  animation: cartBounce 300ms ease;
+}
+
+@keyframes cartBounce {
+
+  0% { transform: scale(1); }
+
+  40% { transform: scale(1.2); }
+
+  70% { transform: scale(0.95); }
+
+  100% { transform: scale(1); }
+
 }

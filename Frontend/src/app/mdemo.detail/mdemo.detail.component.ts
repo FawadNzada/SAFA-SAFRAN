@@ -6,10 +6,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 // WICHTIG: services liegen bei dir unter src/services (NICHT src/app/services)
 import { CartService } from '../../services/cart.service';
 import { DataService } from '../../services/data.service';
-
-// Wenn du ein Model hast, kannst du es importen.
-// Sonst funktioniert "any" auch.
-// import { MDemo } from '../models/mdemo.model';
+import { FavoritesService } from '../../services/favorites.service';
 
 type Review = {
   id: string;
@@ -69,7 +66,8 @@ export class MdDemoDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
-    public cart: CartService
+    public cart: CartService,
+    private favorites: FavoritesService
   ) {}
 
   ngOnInit(): void {
@@ -95,6 +93,7 @@ export class MdDemoDetailComponent implements OnInit {
     const x = Math.max(0, Math.min(5, Math.round(n)));
     return Array.from({ length: x }, (_, i) => i);
   }
+
   starsEmpty(n: number): number[] {
     const x = Math.max(0, Math.min(5, Math.round(n)));
     return Array.from({ length: 5 - x }, (_, i) => i);
@@ -103,6 +102,7 @@ export class MdDemoDetailComponent implements OnInit {
   decQty(): void {
     this.qty = Math.max(1, this.qty - 1);
   }
+
   incQty(): void {
     this.qty = this.qty + 1;
   }
@@ -169,6 +169,26 @@ export class MdDemoDetailComponent implements OnInit {
   }
 
   // -----------------------------
+  // Favoriten
+  // -----------------------------
+  addToFavorites(): void {
+    if (!this.product) return;
+
+    this.favorites.addFavorite({
+      id: Number(this.product.id),
+      name: String(this.product.name ?? ''),
+      price: Number(this.product.price ?? 0),
+      image: String(this.product.image ?? ''),
+      weight: this.product.weight ? String(this.product.weight) : undefined,
+    });
+  }
+
+  isFavorite(): boolean {
+    if (!this.product) return false;
+    return this.favorites.isFavorite(Number(this.product.id));
+  }
+
+  // -----------------------------
   // Reviews (localStorage)
   // -----------------------------
   private getKey(): string {
@@ -210,9 +230,9 @@ export class MdDemoDetailComponent implements OnInit {
       rating: Number(this.reviewRating),
       title,
       text,
-      verified: false,     // später: true wenn wirklich gekauft
+      verified: false,
       dateIso: now.toISOString(),
-      canDelete: true,     // du darfst deine eigene löschen
+      canDelete: true,
     };
 
     this.reviews = [newReview, ...this.reviews];
@@ -251,6 +271,6 @@ export class MdDemoDetailComponent implements OnInit {
     }
 
     const sum = this.reviews.reduce((s, r) => s + Number(r.rating || 0), 0);
-    this.avgRating = Math.round((sum / count) * 10) / 10; // 1 Nachkommastelle
+    this.avgRating = Math.round((sum / count) * 10) / 10;
   }
 }

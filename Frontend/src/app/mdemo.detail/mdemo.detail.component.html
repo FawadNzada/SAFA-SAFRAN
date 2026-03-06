@@ -24,6 +24,10 @@
       <div class="info">
         <h1 class="title">{{ product.name }}</h1>
 
+        <button class="favoriteDetailBtn" type="button" (click)="addToFavorites()">
+          {{ isFavorite() ? '❤️ Zu Favoriten hinzugefügt' : '🤍 Zu Favoriten' }}
+        </button>
+
         <div class="ratingRow">
           <div class="stars">
             <span class="star on" *ngFor="let _ of stars(avgRating)">★</span>
@@ -159,7 +163,6 @@
           </div>
         </div>
 
-        <!-- FORM: eigene Rezension -->
         <div class="reviewForm">
           <h3>Deine Rezension</h3>
 
@@ -194,7 +197,6 @@
           <button class="btnPrimary" type="button" (click)="submitReview()">Rezension absenden</button>
         </div>
 
-        <!-- LISTE -->
         <div class="reviewList" *ngIf="reviews.length > 0; else noReviews">
           <div class="reviewCard" *ngFor="let r of reviews">
             <div class="rTop">

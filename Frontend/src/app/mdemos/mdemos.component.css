@@ -41,6 +41,7 @@ h1 {
   overflow: hidden;
 
   transition: all 0.2s ease;
+  position: relative;  /* erlaubt absolute Elemente innerhalb der Karte */
 }
 
 .card:hover {
@@ -95,4 +96,34 @@ h1 {
 /* Kein unnötiger Leerraum unten */
 .empty {
   margin-top: 10px;
+}
+
+/* ===== FAVORITE BUTTON ===== */
+
+.favorite-btn {
+  position: absolute;       /* Button frei auf Karte positionieren */
+  top: 10px;                /* Abstand von oben */
+  right: 10px;              /* Abstand von rechts */
+
+  background: rgba(0,0,0,0.6); /* dunkler Hintergrund */
+  border: none;             /* kein Rahmen */
+  border-radius: 50%;       /* runder Button */
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;          /* Herzgröße */
+  cursor: pointer;
+
+  z-index: 10;              /* über Bild */
+}
+
+/* Hover Effekt */
+
+.favorite-btn:hover {
+  transform: scale(1.1);
 }

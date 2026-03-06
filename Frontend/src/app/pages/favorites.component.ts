@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { FavoritesService } from '../../services/favorites.service';
+
 type FavType = 'product' | 'bundle';
 
 type FavoriteItem = {
   id: number;
-  type: FavType;
+  type?: FavType;
   name: string;
   price: number;
   image: string;
@@ -21,50 +23,33 @@ type FavoriteItem = {
   styleUrls: ['./favorites.component.css'],
 })
 export class FavoritesComponent {
-  private readonly KEY = 'safa_favorites';
+  constructor(private favoritesService: FavoritesService) {}
 
   get favorites(): FavoriteItem[] {
-    return this.load();
+    return this.favoritesService.getFavorites().map((item: any) => ({
+      id: Number(item.id),
+      type: item.type === 'bundle' ? 'bundle' : 'product',
+      name: String(item.name ?? ''),
+      price: Number(item.price ?? 0),
+      image: String(item.image ?? 'assets/LOGO.png'),
+      weight: item.weight ? String(item.weight) : undefined,
+    }));
   }
 
-  remove(id: number, type: FavType): void {
-    const next = this.load().filter(x => !(x.id === id && x.type === type));
-    this.save(next);
+  remove(id: number): void {
+    this.favoritesService.removeFavorite(id);
   }
 
   clearAll(): void {
-    this.save([]);
-  }
+    const items = this.favoritesService.getFavorites();
 
-  createDemo(): void {
-    const list = this.load();
-    if (list.length > 0) return;
-
-    const demo: FavoriteItem[] = [
-      { id: 1, type: 'product', name: 'Safran (Demo)', price: 19.99, image: 'assets/LOGO.png', weight: '1g' },
-      { id: 101, type: 'bundle', name: 'Deluxe Bundle (Demo)', price: 129.99, image: 'assets/LOGO.png', weight: 'Bundle' },
-    ];
-    this.save(demo);
-  }
-
-  onImgError(e: Event) {
-    const img = e.target as HTMLImageElement;
-    img.src = 'assets/LOGO.png';
-  }
-
-  private load(): FavoriteItem[] {
-    try {
-      const raw = localStorage.getItem(this.KEY) || '[]';
-      const arr = JSON.parse(raw) as FavoriteItem[];
-      return Array.isArray(arr) ? arr : [];
-    } catch {
-      return [];
+    for (const item of items) {
+      this.favoritesService.removeFavorite(Number((item as any).id));
     }
   }
 
-  private save(items: FavoriteItem[]) {
-    try {
-      localStorage.setItem(this.KEY, JSON.stringify(items));
-    } catch {}
+  onImgError(e: Event): void {
+    const img = e.target as HTMLImageElement;
+    img.src = 'assets/LOGO.png';
   }
 }

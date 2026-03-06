@@ -1,11 +1,19 @@
 <div class="container">
 
   <div class="grid">
-    <a
+    <div
       class="card"
       *ngFor="let p of filteredMdemos"
       (click)="showDemo(p)"
     >
+      <button
+        class="favorite-btn"
+        type="button"
+        (click)="addToFavorites(p, $event)"
+      >
+        {{ isFavorite(p.id) ? '❤️' : '🤍' }}
+      </button>
+
       <div class="imgWrap">
         <img [src]="p.image || 'assets/LOGO.png'" [alt]="p.name">
       </div>
@@ -21,7 +29,7 @@
           € {{ p.price }}
         </div>
       </div>
-    </a>
+    </div>
   </div>
 
   <p *ngIf="filteredMdemos.length === 0" class="empty">
