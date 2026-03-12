@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -64,7 +64,8 @@ export class BundleDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public cart: CartService,
-    private favorites: FavoritesService
+    private favorites: FavoritesService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +78,10 @@ export class BundleDetailComponent implements OnInit {
     this.setupTexts(b);
     this.loadReviews();
     this.recalcRating();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   // Helpers Sterne

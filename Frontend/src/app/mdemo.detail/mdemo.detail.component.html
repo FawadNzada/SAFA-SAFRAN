@@ -1,6 +1,10 @@
 <div class="page" *ngIf="product; else notFound">
   <div class="container">
 
+    <button class="backBtn" type="button" (click)="goBack()">
+      ← Zurück
+    </button>
+
     <!-- TOP: Bild + Infos -->
     <div class="top">
       <div class="gallery">

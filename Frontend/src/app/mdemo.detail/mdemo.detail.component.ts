@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -67,7 +67,8 @@ export class MdDemoDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private dataService: DataService,
     public cart: CartService,
-    private favorites: FavoritesService
+    private favorites: FavoritesService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +85,10 @@ export class MdDemoDetailComponent implements OnInit {
       },
       error: (err: unknown) => console.error('Product load error:', err),
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   // -----------------------------

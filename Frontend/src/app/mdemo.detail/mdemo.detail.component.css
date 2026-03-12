@@ -9,6 +9,28 @@
   padding: 24px;
 }
 
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,0.22);
+  background: rgba(255,255,255,0.04);
+  color: #d4af37;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 13px;
+  transition: 0.25s ease;
+}
+
+.backBtn:hover {
+  background: rgba(212,175,55,0.12);
+  border-color: rgba(212,175,55,0.4);
+  box-shadow: 0 0 12px rgba(212,175,55,0.18);
+}
+
 /* TOP */
 .top {
   display: grid;

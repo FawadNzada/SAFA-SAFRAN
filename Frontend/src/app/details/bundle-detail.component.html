@@ -1,6 +1,10 @@
 <div class="page" *ngIf="bundle; else notFound">
   <div class="container">
 
+    <button class="backBtn" type="button" (click)="goBack()">
+      ← Zurück
+    </button>
+
     <div class="top">
       <div class="gallery">
         <div class="imageBox">
